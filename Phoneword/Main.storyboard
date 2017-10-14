@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1411">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="452" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="56" y="76" width="263" height="222"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <variation key="heightClass=regular-widthClass=compact" image="urbansciencelogo.jpg"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to the Urban Science Virtual Dealership Aviser!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="453" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" numberOfLines="2" textAlignment="center">
+                                <rect key="frame" x="56" y="294" width="263" height="79"/>
+                                <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" id="462" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" text="Please ask me a question about your dealership sales..." keyboardDismissMode="interactive">
+                                <rect key="frame" x="56" y="374" width="263" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <color key="backgroundColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="0.34509803921568627"/>
+                                </variation>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPS-ItalicMT" family="Times New Roman" pointSize="16"/>
+                                <color key="textColor" colorSpace="calibratedRGB" red="0" green="0" blue="0" alpha="1"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                </accessibility>
+                            </textView>
+                            <navigationBar contentMode="scaleToFill" id="702" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" barStyle="black" translucent="NO">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Home" id="703"/>
+                                </items>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" colorSpace="calibratedRGB" red="0.094117647058823528" green="0.094117647058823528" blue="0.094117647058823528" alpha="1"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                                </textAttributes>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <color key="barTintColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
+                                </variation>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="929" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="186" y="481" width="133" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
+                                </state>
+                                <connections>
+                                    <action selector="HomeDeleteButton_TouchUpInside:" destination="BYZ-38-t0r" id="1392" eventType="touchUpInside"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="931" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="150" y="547" width="74" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <variation key="heightClass=regular-widthClass=compact" image="white-microphone-button.png"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Text" borderStyle="roundedRect" minimumFontSize="16" id="1397" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="56" y="453" width="263" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2401" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="64" y="491" width="94" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0" green="0.52549019607843139" blue="1" alpha="1"/>
+                                </state>
+                                <connections>
+                                    <segue id="2474" destination="1791" kind="show"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="452"/>
+                                <exclude reference="453"/>
+                                <exclude reference="462"/>
+                                <exclude reference="702"/>
+                                <exclude reference="929"/>
+                                <exclude reference="931"/>
+                                <exclude reference="1397"/>
+                                <exclude reference="2401"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="452"/>
+                                <include reference="453"/>
+                                <include reference="462"/>
+                                <include reference="702"/>
+                                <include reference="929"/>
+                                <include reference="931"/>
+                                <include reference="1397"/>
+                                <include reference="2401"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="EnterLabel" destination="453" id="name-outlet-453"/>
+                        <outlet property="QuestionLabel" destination="462" id="name-outlet-462"/>
+                        <outlet property="HomeDeleteButton" destination="929" id="name-outlet-929"/>
+                        <outlet property="HomeTextField" destination="1397" id="name-outlet-1397"/>
+                        <outlet property="HomeNavItem" destination="1542" id="name-outlet-1542"/>
+                        <outlet property="HomeSubmitButton" destination="2401" id="name-outlet-2401"/>
+                    </connections>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationItem title="Home" id="1542" key="navigationItem"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="0.0" y="0.0"/>
+        </scene>
+        <scene sceneID="1410">
+            <objects>
+                <navigationController id="1411" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1413">
+                        <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue id="1543" destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1414" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-568" y="-1"/>
+        </scene>
+        <scene sceneID="1790">
+            <objects>
+                <viewController id="1791" sceneMemberID="viewController" customClass="KPIViewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1788"/>
+                        <viewControllerLayoutGuide type="bottom" id="1789"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1792">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" id="2003" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" translucent="NO">
+                                <rect key="frame" x="0.0" y="0.0" width="377" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="2004"/>
+                                </items>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" colorSpace="calibratedRGB" red="0.94901960784313721" green="0.19607843137254902" blue="0.19607843137254902" alpha="1"/>
+                                </textAttributes>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <color key="barTintColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
+                                </variation>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2488" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="118" y="296" width="152" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="View Actions">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue id="2541" destination="1901" kind="show"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="2003"/>
+                                <exclude reference="2488"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="2003"/>
+                                <include reference="2488"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="KPIActionsButton" destination="2488" id="name-outlet-2488"/>
+                    </connections>
+                    <navigationItem title="KPIs" id="2005" key="navigationItem"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1793" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="570" y="-9"/>
+        </scene>
+        <scene sceneID="1900">
+            <objects>
+                <viewController id="1901" sceneMemberID="viewController" customClass="ActionsViewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1898"/>
+                        <viewControllerLayoutGuide type="bottom" id="1899"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1902">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" id="2016" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" translucent="NO">
+                                <rect key="frame" x="0.0" y="1" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="2017"/>
+                                </items>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <color key="barTintColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
+                                </variation>
+                            </navigationBar>
+                        </subviews>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="2016"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="2016"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem title="Actions" id="2018" key="navigationItem"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1903" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1171" y="-9"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="urbansciencelogo.jpg" width="500" height="507"/>
+        <image name="MP.png" width="256" height="256"/>
+        <image name="white-microphone-button.png" width="400" height="400"/>
+        <image name="black-microphone-button.png" width="400" height="400"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedScreenMetrics key="destination" type="retina47"/>
+    </simulatedMetricsContainer>
+</document>
