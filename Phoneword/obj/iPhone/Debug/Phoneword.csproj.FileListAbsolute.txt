@@ -1,0 +1,14 @@
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\ibtool\_BundleResourceWithLogicalName.items
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\actool\_PartialAppManifest.items
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\actool\_BundleResourceWithLogicalName.items
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\optimized\black-microphone-button.png
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\optimized\MP.png
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\optimized\white-microphone-button.png
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\optimized\Entitlements.plist
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\optimized\
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\Phoneword.csprojResolveAssemblyReference.cache
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\Phoneword.csproj.CoreCompileInputs.cache
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhone\Debug\Phoneword.exe
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhone\Debug\Phoneword.pdb
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\Phoneword.exe
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhone\Debug\Phoneword.pdb
