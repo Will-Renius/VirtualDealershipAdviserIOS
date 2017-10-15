@@ -120,6 +120,9 @@ namespace Phoneword
             // will probably move this to a client class as well. but fuck it for now 
             string dealer_name = "omega";
             relatedKpi = new Kpi();
+            //List<Kpi> RNKPI;
+
+
             try
             {
                 string url;
@@ -139,22 +142,37 @@ namespace Phoneword
                 response = client.GetAsync(url).Result;
                 json_string = response.Content.ReadAsStringAsync().Result;
 
+                //Says it expects json string to be a kpi model
                 relatedKpi = JsonConvert.DeserializeObject<Kpi>(json_string);
                 if(relatedKpi != null)
                 {
                     kpiViewController.relatedKpi = relatedKpi;
                 }
 
+               // kpiViewController.RNKpi.Add(relatedKpi);
+
                 //grabbing needed kpis
                 url = $"{BASE_URL}NeededKpi?dealer_name={dealer_name}";
                 response = client.GetAsync(url).Result;
                 json_string = response.Content.ReadAsStringAsync().Result;
 
+                //Says it expects json string to be a list of kpi model
                 neededKpi = JsonConvert.DeserializeObject<List<Kpi>>(json_string);
-                if (relatedKpi != null)
+                if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError &&
+                    response.StatusCode != System.Net.HttpStatusCode.BadRequest && 
+                    response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
-                    kpiViewController.neededKpi = neededKpi;
+                    kpiViewController.neededKpi = neededKpi;                                          //////////////////////////////////////////HERE we use RNKPI not needed
+                    //kpiViewController.neededKpi = RNKPI;
                 }
+                else
+                {
+                    neededKpi = new List<Kpi>();
+                    kpiViewController.neededKpi.Add(new Kpi { name = response.StatusCode.ToString() });
+                }
+
+                //kpiViewController.RNKpi.Concat(kpiViewController.neededKpi).ToList();
+                //kpiViewController.RNKpi.AddRange(kpiViewController.neededKpi);
 
             }
             catch (Exception e)

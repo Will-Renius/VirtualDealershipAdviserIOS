@@ -12,6 +12,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Web;
+//using Phoneword.Models.TableSourceModel;
 
 namespace Phoneword
 {
@@ -24,6 +25,8 @@ namespace Phoneword
 
         private List<KpiAction> actions;
 
+        public List<Kpi> RNKpi { get; set; } //Related and Needed
+
         public KPIViewController (IntPtr handle) : base (handle)
         {
         }
@@ -33,24 +36,36 @@ namespace Phoneword
             base.ViewDidLoad();
 
             // Perform any additional setup after loading the view, typically from a nib.
-            if(relatedKpi != null)
-            {
-                relatedKpiLabel.LineBreakMode = UILineBreakMode.CharacterWrap;
-                string displayKpi =
-                    "Name=" + relatedKpi.name + " :: " +
-                    "Value=" + relatedKpi.value + " :: \n" +
-                    "Brand=" + relatedKpi.brand + " :: " +
-                    "P-Value=" + relatedKpi.p_val;
-                relatedKpiLabel.Text = displayKpi;
-                relatedKpiLabel.SizeToFit();
-            }
-            else
-            {
-                relatedKpiLabel.Text = "No KPI found";
-                relatedKpiLabel.SizeToFit();
-            }
+            /* if(relatedKpi.name == "BAD")
+             {
+                 relatedKpiLabel.LineBreakMode = UILineBreakMode.CharacterWrap;
+                 string displayKpi =
+                     "Name=" + relatedKpi.name + " :: " +
+                     "Value=" + relatedKpi.value + " :: \n" +
+                     "Brand=" + relatedKpi.brand + " :: " +
+                     "P-Value=" + relatedKpi.p_val;
+                 relatedKpiLabel.Text = displayKpi;
+                 relatedKpiLabel.SizeToFit();
 
-            string a;
+             }
+             else
+             {
+                 relatedKpiLabel.Text = "No KPI found";
+                 relatedKpiLabel.SizeToFit();
+             }*/
+
+            //RNKpi.Add(relatedKpi);
+
+            List<Kpi> rnkpi = neededKpi;
+            rnkpi.Insert(0, relatedKpi);
+
+            UITableView _table;
+            _table = new UITableView{
+                Frame = new CoreGraphics.CGRect(0,30,View.Bounds.Width,View.Bounds.Height),
+                Source = new TableSourceModel(rnkpi)
+            };
+            View.AddSubview(_table);
+            //string a;
         }
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
