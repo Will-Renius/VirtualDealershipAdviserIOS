@@ -18,11 +18,20 @@ namespace Phoneword
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton KPIActionsButton { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel relatedKpiLabel { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
             if (KPIActionsButton != null) {
                 KPIActionsButton.Dispose ();
                 KPIActionsButton = null;
+            }
+
+            if (relatedKpiLabel != null) {
+                relatedKpiLabel.Dispose ();
+                relatedKpiLabel = null;
             }
         }
     }

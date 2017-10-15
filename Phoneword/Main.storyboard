@@ -71,11 +71,6 @@
                                     <action selector="HomeDeleteButton_TouchUpInside:" destination="BYZ-38-t0r" id="1392" eventType="touchUpInside"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="931" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
-                                <rect key="frame" x="150" y="547" width="74" height="74"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <variation key="heightClass=regular-widthClass=compact" image="white-microphone-button.png"/>
-                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Text" borderStyle="roundedRect" minimumFontSize="16" id="1397" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
                                 <rect key="frame" x="56" y="453" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -93,6 +88,39 @@
                                     <segue id="2474" destination="1791" kind="show"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" id="2801" fixedFrame="YES">
+                                <rect key="frame" x="44" y="527" width="86" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2807" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                        <rect key="frame" x="-28" y="16" width="114" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="2807"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="2807"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2834" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="157" y="536" width="61" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="white-microphone-button.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0" green="0.52549019607843139" blue="1" alpha="1"/>
+                                </state>
+                                <connections/>
+                            </button>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
@@ -101,9 +129,10 @@
                                 <exclude reference="462"/>
                                 <exclude reference="702"/>
                                 <exclude reference="929"/>
-                                <exclude reference="931"/>
                                 <exclude reference="1397"/>
                                 <exclude reference="2401"/>
+                                <exclude reference="2801"/>
+                                <exclude reference="2834"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -113,9 +142,10 @@
                                 <include reference="462"/>
                                 <include reference="702"/>
                                 <include reference="929"/>
-                                <include reference="931"/>
                                 <include reference="1397"/>
                                 <include reference="2401"/>
+                                <include reference="2801"/>
+                                <include reference="2834"/>
                             </mask>
                         </variation>
                     </view>
@@ -123,9 +153,11 @@
                         <outlet property="EnterLabel" destination="453" id="name-outlet-453"/>
                         <outlet property="QuestionLabel" destination="462" id="name-outlet-462"/>
                         <outlet property="HomeDeleteButton" destination="929" id="name-outlet-929"/>
-                        <outlet property="HomeTextField" destination="1397" id="name-outlet-1397"/>
+                        <outlet property="Querybox" destination="1397" id="name-outlet-1397"/>
                         <outlet property="HomeNavItem" destination="1542" id="name-outlet-1542"/>
                         <outlet property="HomeSubmitButton" destination="2401" id="name-outlet-2401"/>
+                        <outlet property="SpeakerButton" destination="2834" id="name-outlet-2834"/>
+                        <outlet property="Listener" destination="2807" id="name-outlet-2807"/>
                     </connections>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -185,22 +217,32 @@
                                     <segue id="2541" destination="1901" kind="show"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3097" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="34" y="86" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="2003"/>
                                 <exclude reference="2488"/>
+                                <exclude reference="3097"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="2003"/>
                                 <include reference="2488"/>
+                                <include reference="3097"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="KPIActionsButton" destination="2488" id="name-outlet-2488"/>
+                        <outlet property="relatedKpiLabel" destination="3097" id="name-outlet-3097"/>
                     </connections>
                     <navigationItem title="KPIs" id="2005" key="navigationItem"/>
                 </viewController>
