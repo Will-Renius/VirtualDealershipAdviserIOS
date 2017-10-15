@@ -14,5 +14,16 @@ namespace Phoneword
     [Register ("ActionsViewController")]
     partial class ActionsViewController
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextView ActionTextView { get; set; }
+
+        void ReleaseDesignerOutlets ()
+        {
+            if (ActionTextView != null) {
+                ActionTextView.Dispose ();
+                ActionTextView = null;
+            }
+        }
     }
 }

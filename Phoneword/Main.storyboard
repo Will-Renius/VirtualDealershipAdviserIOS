@@ -38,7 +38,7 @@
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <color key="backgroundColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="0.34509803921568627"/>
                                 </variation>
-                                <fontDescription key="fontDescription" name="TimesNewRomanPS-ItalicMT" family="Times New Roman" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="16"/>
                                 <color key="textColor" colorSpace="calibratedRGB" red="0" green="0" blue="0" alpha="1"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES"/>
@@ -76,7 +76,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <variation key="heightClass=regular-widthClass=compact" image="white-microphone-button.png"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Text" borderStyle="roundedRect" minimumFontSize="16" id="1397" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Text" borderStyle="roundedRect" minimumFontSize="16" id="1397" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" clearsOnBeginEditing="YES">
                                 <rect key="frame" x="56" y="453" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -91,6 +91,7 @@
                                 </state>
                                 <connections>
                                     <segue id="2474" destination="1791" kind="show"/>
+                                    <action selector="HomeSubmitButton_TouchUpInside:" destination="BYZ-38-t0r" id="3115" eventType="touchUpInside"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -183,24 +184,49 @@
                                 </state>
                                 <connections>
                                     <segue id="2541" destination="1901" kind="show"/>
+                                    <action selector="KPIActionsButton_TouchUpInside:" destination="1791" id="3142" eventType="touchUpInside"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2800" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="151" y="173" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="KPITestButton_TouchUpInside:" destination="1791" id="2801" eventType="touchUpInside"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="2813" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="68" y="367" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <color key="textColor" colorSpace="calibratedRGB" red="0" green="0" blue="0" alpha="1"/>
+                            </textView>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="2003"/>
                                 <exclude reference="2488"/>
+                                <exclude reference="2800"/>
+                                <exclude reference="2813"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="2003"/>
                                 <include reference="2488"/>
+                                <include reference="2800"/>
+                                <include reference="2813"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="KPIActionsButton" destination="2488" id="name-outlet-2488"/>
+                        <outlet property="KPITestButton" destination="2800" id="name-outlet-2800"/>
+                        <outlet property="KPITextView" destination="2813" id="name-outlet-2813"/>
                     </connections>
                     <navigationItem title="KPIs" id="2005" key="navigationItem"/>
                 </viewController>
@@ -230,19 +256,35 @@
                                     <color key="barTintColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
                                 </variation>
                             </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="3128" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="50" y="187" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <color key="textColor" colorSpace="calibratedRGB" red="0.83529411764705885" green="0.16470588235294117" blue="0.16470588235294117" alpha="1"/>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <color key="backgroundColor" colorSpace="calibratedRGB" red="0.63137254901960782" green="0.69019607843137254" blue="0.611764705882353" alpha="1"/>
+                                </variation>
+                            </textView>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="2016"/>
+                                <exclude reference="3128"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="2016"/>
+                                <include reference="3128"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem title="Actions" id="2018" key="navigationItem"/>
+                    <connections>
+                        <outlet property="ActionTextView" destination="3128" id="name-outlet-3128"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1903" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

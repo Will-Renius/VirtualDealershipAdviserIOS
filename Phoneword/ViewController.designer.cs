@@ -41,6 +41,10 @@ namespace Phoneword
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void HomeDeleteButton_TouchUpInside (UIKit.UIButton sender);
 
+        [Action ("HomeSubmitButton_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void HomeSubmitButton_TouchUpInside (UIKit.UIButton sender);
+
         void ReleaseDesignerOutlets ()
         {
             if (EnterLabel != null) {

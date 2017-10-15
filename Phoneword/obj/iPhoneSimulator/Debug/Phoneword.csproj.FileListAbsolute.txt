@@ -26,3 +26,12 @@ C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimul
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.csproj.CoreCompileInputs.cache
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.exe
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.pdb
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\KeyboardOverlap.Forms.Plugin.iOSUnified.dll
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\Xamarin.Forms.Core.dll
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\Xamarin.Forms.Platform.dll
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\Xamarin.Forms.Platform.iOS.dll
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\Xamarin.Forms.Xaml.dll
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\Xamarin.Forms.Core.xml
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\Newtonsoft.Json.dll
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\bin\iPhoneSimulator\Debug\Newtonsoft.Json.xml
