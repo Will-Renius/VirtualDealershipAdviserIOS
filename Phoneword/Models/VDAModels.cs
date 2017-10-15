@@ -22,11 +22,6 @@ namespace Phoneword.Models
         public List<KpiAction> action_list { get; set; } 
     }
 
-    public class KpiList
-    {
-        public List<Kpi> Kpi { get; set; }
-    }
-
     public class KpiAction
     {
         //i was thinking of this as whether it's good or bad, not sure what to label it

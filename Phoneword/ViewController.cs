@@ -2,6 +2,7 @@
 
 using UIKit;
 
+
 //Speech recognition
 using Speech;
 using Foundation;
@@ -14,6 +15,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Web;
+using System.Collections.Generic;
 
 //our namespaces
 using Phoneword.Models;
@@ -27,7 +29,8 @@ namespace Phoneword
         private AVAudioEngine audioEngine = new AVAudioEngine();
         private SFSpeechRecognizer speechRecognizer = new SFSpeechRecognizer(new NSLocale("en_US"));
 
-        private Kpi relatedKpi = new Kpi();
+        private Kpi relatedKpi;
+        private List<Kpi> neededKpi;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -39,6 +42,9 @@ namespace Phoneword
             // Perform any additional setup after loading the view, typically from a nib.
            
             SpeakerButton.Enabled = false;
+
+            Querybox.Text = "";
+            Querybox.Placeholder = "Your question...";
 
            
             SFSpeechRecognizer.RequestAuthorization((SFSpeechRecognizerAuthorizationStatus auth) =>
@@ -98,45 +104,64 @@ namespace Phoneword
         partial void HomeDeleteButton_TouchUpInside(UIButton sender)
         {
             Querybox.Text = "";
+            Querybox.Placeholder = "Your question...";
         }
 
         //BAE number 2
         //https://developer.xamarin.com/guides/ios/getting_started/hello,_iOS_multiscreen/hello,_iOS_multiscreen_quickstart/
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
+            string BASE_URL = "http://virtualdealershipadvisorapi.azurewebsites.net/api/";
             base.PrepareForSegue(segue, sender);
 
             var kpiViewController = segue.DestinationViewController as KPIViewController;
 
             //============= Calling our API ======
             // will probably move this to a client class as well. but fuck it for now 
-            string related_kpi_url = "http://virtualdealershipadvisorapi.azurewebsites.net/api/RelatedKpi";
-            string localhost = "http://localhost:65007/api/relatedkpi";
             string dealer_name = "omega";
-
+            relatedKpi = new Kpi();
             try
             {
-                string url = $"{related_kpi_url}?query={Uri.EscapeDataString(Querybox.Text)}&dealer_name={dealer_name}";
-                var client = new HttpClient();
+                string url;
+                HttpClient client;
+                HttpResponseMessage response;
+                string json_string;
+                
+                client = new HttpClient();
 
                 client.DefaultRequestHeaders.Accept.Clear();
                 //add any default headers below this
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = client.GetAsync(url).Result;
-                string json_string = response.Content.ReadAsStringAsync().Result;
+                //grabbing related kpi
+                url = $"{BASE_URL}RelatedKpi?query={Uri.EscapeDataString(Querybox.Text)}&dealer_name={dealer_name}";
+                response = client.GetAsync(url).Result;
+                json_string = response.Content.ReadAsStringAsync().Result;
 
                 relatedKpi = JsonConvert.DeserializeObject<Kpi>(json_string);
                 if(relatedKpi != null)
                 {
                     kpiViewController.relatedKpi = relatedKpi;
                 }
+
+                //grabbing needed kpis
+                url = $"{BASE_URL}NeededKpi?dealer_name={dealer_name}";
+                response = client.GetAsync(url).Result;
+                json_string = response.Content.ReadAsStringAsync().Result;
+
+                neededKpi = JsonConvert.DeserializeObject<List<Kpi>>(json_string);
+                if (relatedKpi != null)
+                {
+                    kpiViewController.neededKpi = neededKpi;
+                }
+
             }
             catch (Exception e)
             {
-                new UIAlertView("API Error", "Error with VDA API call...", null, "OK", null).Show();
+                new UIAlertView("API Error", "Error with VDA API call: " + e.Message, null, "OK", null).Show();
             }
+
         }
 
 
