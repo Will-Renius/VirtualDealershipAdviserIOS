@@ -24,8 +24,8 @@ namespace Phoneword.Models
 
     public class KpiAction
     {
-        //i was thinking of this as whether it's good or bad, not sure what to label it
-        public string response { get; set; }
-        public string text { get; set; }
+        public string actionP { get; set; }
+        public string kpi { get; set; }
+        public string type { get; set; }
     }
 }
