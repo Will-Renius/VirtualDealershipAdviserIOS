@@ -18,23 +18,35 @@ namespace Phoneword
 {
     public partial class KPIViewController : UIViewController
     {
-
+        //The members passed into View from Home page
         public Kpi relatedKpi { get; set; } 
-
         public List<Kpi> neededKpi { get; set; }
 
-        private List<KpiAction> actions;
+        //currently selected
+        private Kpi selectedKpi;
+        
+        public void setSelectedKpi(Kpi Selected)
+        {
+            selectedKpi = Selected;
+        }
 
-        public List<Kpi> RNKpi { get; set; } //Related and Needed
+        //This will be set when we hit the API
+        private List<KpiAction> actions;
+        //Container to store our KPIs in the list view
+        private List<Kpi> RNKpi { get; set; } //Related and Needed
+        private UITableView _table;
 
         public KPIViewController (IntPtr handle) : base (handle)
         {
+            selectedKpi = new Kpi();
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
             List<Kpi> rnkpi = new List<Kpi>();
+
+            //eventually we should disable the actions button when this is here.
             if( neededKpi != null && relatedKpi != null)
             {
                 rnkpi = neededKpi;
@@ -42,14 +54,13 @@ namespace Phoneword
             }
             else
             {
-                new UIAlertView("NULL Reference", "Null reference from previous window!", null, "Shucks.", null).Show();
+                new UIAlertView("NULL Reference", "Null reference from previous window!", null, "OK", null).Show();
                 rnkpi.Add(new Kpi { name = "Null reference" });
             }
 
-            UITableView _table;
             _table = new UITableView{
                 Frame = new CoreGraphics.CGRect(0,100,View.Bounds.Width,View.Bounds.Height),
-                Source = new TableSourceModel(rnkpi)
+                Source = new TableSourceModel(rnkpi, this)
             };
             View.AddSubview(_table);
         }
@@ -61,43 +72,72 @@ namespace Phoneword
 
             var actionViewController = segue.DestinationViewController as ActionsViewController;
 
+            //gotta reset our list variables
+            actionViewController.actions = new List<KpiAction>();
+            actions = new List<KpiAction>();
+
             //============= Calling our API ======
             actions = new List<KpiAction>();
-            try
+
+            string url, json_string, name;
+            HttpClient client;
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            client = new HttpClient();
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            //add any default headers below this
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //grabbing related kpi
+            //checking if I selected any kpi
+            if (string.IsNullOrEmpty(selectedKpi.name))
             {
-                string url;
-                HttpClient client;
-                HttpResponseMessage response;
-                string json_string;
+                new UIAlertView("Selection Error", "No KPI selected, defaulting to related KPI...", null, "OK", null).Show();
+                name = relatedKpi.name;
+            }
+            else
+            {
+                name = selectedKpi.name;
+            }
 
-                client = new HttpClient();
+            url = $"{BASE_URL}Actions?name={Uri.EscapeDataString(name)}&value={relatedKpi.p_val}&threshold={"0.5"}";
 
-                client.DefaultRequestHeaders.Accept.Clear();
-                //add any default headers below this
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //grabbing related kpi
-                url = $"{BASE_URL}Actions?name={Uri.EscapeDataString("Dealer Sales")}&value={"0.57"}&threshold={"0.5"}";
+            //give'er 3 tries!
+            for(int i = 0; i<3; i++)
+            {
                 response = client.GetAsync(url).Result;
-                json_string = response.Content.ReadAsStringAsync().Result;
-
-                actions = JsonConvert.DeserializeObject<List<KpiAction>>(json_string);
-                if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError &&
-                    relatedKpi != null)
+                if(response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
                 {
-                    actionViewController.actions = actions;
+                    //some other stuff?
+                    break;
                 }
                 else
                 {
-                    actionViewController.actions.Add(new KpiAction { kpi = response.StatusCode.ToString()});
+                    //BUG: name = Dealer Share doesnt work in api
+                    //some stuff probably
+                    continue;
                 }
-
             }
-            catch (Exception e)
+                
+            //if we still have internal server error
+            if(response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                new UIAlertView("API Error", "Error with VDA API call: " + e.Message, null, "OK", null).Show();
+                new UIAlertView("API Error", $"Status Code: {response.StatusCode.ToString()}", null, "OK", null).Show();
+                actions.Add(new KpiAction { actionP = "Please select another KPI" });
             }
+            else //proceed as normal otherwise
+            {
+                json_string = response.Content.ReadAsStringAsync().Result;
+                actions = JsonConvert.DeserializeObject<List<KpiAction>>(json_string);
+                if(actions == null)
+                {
+                    new UIAlertView("Deserialization ERR", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
+                    actions.Add(new KpiAction { actionP = "Please select another KPI" });
+                }
+            }
+            actionViewController.actions = actions;
 
         }
 

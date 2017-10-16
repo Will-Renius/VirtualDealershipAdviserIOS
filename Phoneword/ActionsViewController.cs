@@ -28,15 +28,6 @@ namespace Phoneword
                 Source = new TableActionModel(actions)
             };
             View.AddSubview(_table);
-
-            // Perform any additional setup after loading the view, typically from a nib.
-            /* new UIAlertView(
-                 "Temp",
-                 "Processed...",
-                 null,
-                 "OK",
-                 null
-                 );*/
         }
     }
 }

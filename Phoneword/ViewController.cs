@@ -83,13 +83,12 @@ namespace Phoneword
                 if (audioEngine.Running == true)
                 {
                     StopRecording();
-                    Listener.Text = "Stopped";
                     SpeakerButton.Highlighted = false;
                 }
                 else
                 {
                     StartRecording();
-                    Listener.Text = "Started";
+                    Querybox.Placeholder = "Listening...";
                     SpeakerButton.Highlighted = true;
                 }
             };
@@ -104,10 +103,9 @@ namespace Phoneword
         partial void HomeDeleteButton_TouchUpInside(UIButton sender)
         {
             Querybox.Text = "";
-            Querybox.Placeholder = "Your question...";
+            Querybox.Placeholder = "Your question:";
         }
 
-        //BAE number 2
         //https://developer.xamarin.com/guides/ios/getting_started/hello,_iOS_multiscreen/hello,_iOS_multiscreen_quickstart/
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
@@ -116,65 +114,99 @@ namespace Phoneword
 
             var kpiViewController = segue.DestinationViewController as KPIViewController;
 
+            //we gotta reset our list variables
+            kpiViewController.neededKpi = new List<Kpi>();
+            neededKpi = new List<Kpi>();
+
             //============= Calling our API ======
             // will probably move this to a client class as well
             string dealer_name = "omega";
             relatedKpi = new Kpi();
-
-
-            try
-            {
-                string url;
-                HttpClient client;
-                HttpResponseMessage response;
-                string json_string;
+            
+            string url, json_string, query;
+            HttpClient client;
+            HttpResponseMessage response = new HttpResponseMessage();
                 
-                client = new HttpClient();
+            client = new HttpClient();
 
-                client.DefaultRequestHeaders.Accept.Clear();
-                //add any default headers below this
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Accept.Clear();
+            //add any default headers below this
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //grabbing related kpi
-                url = $"{BASE_URL}RelatedKpi?query={Uri.EscapeDataString(Querybox.Text)}&dealer_name={dealer_name}";
+            //grabbing related kpi
+            if (string.IsNullOrEmpty(Querybox.Text))
+            {
+                new UIAlertView("Query Error", "No query, defaulting to \"dealer insell\"...", null, "OK", null).Show();
+                query = "how is my insell";
+            }
+            else
+            {
+                query = Querybox.Text;
+            }
+
+            url = $"{BASE_URL}RelatedKpi?query={Uri.EscapeDataString(query)}&dealer_name={dealer_name}";
+            
+            //give'er 3 tries!
+            for (int i = 0; i < 3; i++)
+            {
                 response = client.GetAsync(url).Result;
-                json_string = response.Content.ReadAsStringAsync().Result;
+                if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
+                {
+                    //some other stuff?
+                    break;
+                }
+                else
+                {
+                    //BUG: name = Dealer Share doesnt work in api
+                    //some stuff probably
+                    continue;
+                }
+            }
+            
+            if(response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                new UIAlertView("GET /RelatedKpi ERR:", response.StatusCode.ToString(), null, "OK", null).Show();
 
+                relatedKpi = new Kpi { name = "ERR: Please consider redoing question..." };
+            }
+            else
+            {
+                json_string = response.Content.ReadAsStringAsync().Result;
                 //Says it expects json string to be a kpi model
                 relatedKpi = JsonConvert.DeserializeObject<Kpi>(json_string);
-                if(relatedKpi != null)
+                
+                if(relatedKpi == null)
                 {
-                    kpiViewController.relatedKpi = relatedKpi;
-                }
-                else
-                {
-                    new UIAlertView("API Error", "Related KPI == null", null, "OK", null).Show();
-                }
+                    new UIAlertView("Deserialization ERR", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
 
-                //grabbing needed kpis
-                url = $"{BASE_URL}NeededKpi?dealer_name={dealer_name}";
-                response = client.GetAsync(url).Result;
-                json_string = response.Content.ReadAsStringAsync().Result;
-
-                //Says it expects json string to be a list of kpi model
-                neededKpi = JsonConvert.DeserializeObject<List<Kpi>>(json_string);
-                if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError &&
-                    response.StatusCode != System.Net.HttpStatusCode.BadRequest && 
-                    response.StatusCode != System.Net.HttpStatusCode.NotFound)
-                {
-                    kpiViewController.neededKpi = neededKpi;                                          //////////////////////////////////////////HERE we use RNKPI not needed
-                }
-                else
-                {
-                    neededKpi = new List<Kpi>();
-                    kpiViewController.neededKpi.Add(new Kpi { name = response.StatusCode.ToString() });
+                    relatedKpi = new Kpi { name = "ERR: Please consider redoing question..." };
                 }
             }
-            catch (Exception e)
+            kpiViewController.relatedKpi = relatedKpi;
+
+            //grabbing needed kpis
+            url = $"{BASE_URL}NeededKpi?dealer_name={dealer_name}";
+            response = client.GetAsync(url).Result;
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                new UIAlertView("API Error", "Error with VDA API call: " + e.Message, null, "OK", null).Show();
+                new UIAlertView("GET /NeededKpi ERR:", response.StatusCode.ToString(), null, "OK", null).Show();
+
+                neededKpi.Add(new Kpi { name = "Error finding your needed KPIs" });
             }
+            else
+            {
+                json_string = response.Content.ReadAsStringAsync().Result;
+                neededKpi = JsonConvert.DeserializeObject<List<Kpi>>(json_string);
+
+                if (neededKpi == null)
+                {
+                    new UIAlertView("Deserialization ERR", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
+                    neededKpi.Add(new Kpi { name = "Error deserializing your needed kpis" });
+                }
+            }
+
+            kpiViewController.neededKpi = neededKpi;
 
         }
 
@@ -210,6 +242,8 @@ namespace Phoneword
                     }
                 }
             });
+
+            
         }
 
         public void StopRecording()

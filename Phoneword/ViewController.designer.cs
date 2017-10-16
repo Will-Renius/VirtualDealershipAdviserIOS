@@ -31,10 +31,6 @@ namespace Phoneword
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel Listener { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextField Querybox { get; set; }
 
         [Outlet]
@@ -69,11 +65,6 @@ namespace Phoneword
             if (HomeSubmitButton != null) {
                 HomeSubmitButton.Dispose ();
                 HomeSubmitButton = null;
-            }
-
-            if (Listener != null) {
-                Listener.Dispose ();
-                Listener = null;
             }
 
             if (Querybox != null) {

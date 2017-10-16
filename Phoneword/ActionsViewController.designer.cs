@@ -14,5 +14,8 @@ namespace Phoneword
     [Register ("ActionsViewController")]
     partial class ActionsViewController
     {
+        void ReleaseDesignerOutlets ()
+        {
+        }
     }
 }
