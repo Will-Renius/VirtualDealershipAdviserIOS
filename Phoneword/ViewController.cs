@@ -117,10 +117,9 @@ namespace Phoneword
             var kpiViewController = segue.DestinationViewController as KPIViewController;
 
             //============= Calling our API ======
-            // will probably move this to a client class as well. but fuck it for now 
+            // will probably move this to a client class as well
             string dealer_name = "omega";
             relatedKpi = new Kpi();
-            //List<Kpi> RNKPI;
 
 
             try
@@ -148,8 +147,10 @@ namespace Phoneword
                 {
                     kpiViewController.relatedKpi = relatedKpi;
                 }
-
-               // kpiViewController.RNKpi.Add(relatedKpi);
+                else
+                {
+                    new UIAlertView("API Error", "Related KPI == null", null, "OK", null).Show();
+                }
 
                 //grabbing needed kpis
                 url = $"{BASE_URL}NeededKpi?dealer_name={dealer_name}";
@@ -163,17 +164,12 @@ namespace Phoneword
                     response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
                     kpiViewController.neededKpi = neededKpi;                                          //////////////////////////////////////////HERE we use RNKPI not needed
-                    //kpiViewController.neededKpi = RNKPI;
                 }
                 else
                 {
                     neededKpi = new List<Kpi>();
                     kpiViewController.neededKpi.Add(new Kpi { name = response.StatusCode.ToString() });
                 }
-
-                //kpiViewController.RNKpi.Concat(kpiViewController.neededKpi).ToList();
-                //kpiViewController.RNKpi.AddRange(kpiViewController.neededKpi);
-
             }
             catch (Exception e)
             {

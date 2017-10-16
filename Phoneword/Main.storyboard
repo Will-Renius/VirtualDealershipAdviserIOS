@@ -208,42 +208,34 @@
                                     <color key="barTintColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
                                 </variation>
                             </navigationBar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2488" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
-                                <rect key="frame" x="118" y="296" width="152" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3622" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="110" y="71" width="154" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="View Actions">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" colorSpace="calibratedRGB" red="0.92941176470588238" green="0.10980392156862745" blue="0.10980392156862745" alpha="1"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
                                 </state>
                                 <connections>
-                                    <segue id="2541" destination="1901" kind="show"/>
+                                    <segue id="3731" destination="1901" kind="show"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3097" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" textAlignment="center" text="Your Kpi:">
-                                <rect key="frame" x="24" y="81" width="299" height="173"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="2003"/>
-                                <exclude reference="2488"/>
-                                <exclude reference="3097"/>
+                                <exclude reference="3622"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="2003"/>
-                                <include reference="2488"/>
-                                <include reference="3097"/>
+                                <include reference="3622"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="KPIActionsButton" destination="2488" id="name-outlet-2488"/>
-                        <outlet property="relatedKpiLabel" destination="3097" id="name-outlet-3097"/>
+                        <outlet property="KPIViewActions" destination="3622" id="name-outlet-3622"/>
                     </connections>
                     <navigationItem title="KPIs" id="2005" key="navigationItem"/>
                 </viewController>

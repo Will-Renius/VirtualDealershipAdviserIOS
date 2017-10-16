@@ -92,6 +92,7 @@
     <Compile Include="KPIViewController.designer.cs">
       <DependentUpon>KPIViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\TableActionModel.cs" />
     <Compile Include="Models\TableSourceModel.cs" />
     <Compile Include="Models\VDAModels.cs" />
     <Compile Include="PhoneTranslator.cs" />

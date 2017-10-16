@@ -34,38 +34,24 @@ namespace Phoneword
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            // Perform any additional setup after loading the view, typically from a nib.
-            /* if(relatedKpi.name == "BAD")
-             {
-                 relatedKpiLabel.LineBreakMode = UILineBreakMode.CharacterWrap;
-                 string displayKpi =
-                     "Name=" + relatedKpi.name + " :: " +
-                     "Value=" + relatedKpi.value + " :: \n" +
-                     "Brand=" + relatedKpi.brand + " :: " +
-                     "P-Value=" + relatedKpi.p_val;
-                 relatedKpiLabel.Text = displayKpi;
-                 relatedKpiLabel.SizeToFit();
-
-             }
-             else
-             {
-                 relatedKpiLabel.Text = "No KPI found";
-                 relatedKpiLabel.SizeToFit();
-             }*/
-
-            //RNKpi.Add(relatedKpi);
-
-            List<Kpi> rnkpi = neededKpi;
-            rnkpi.Insert(0, relatedKpi);
+            List<Kpi> rnkpi = new List<Kpi>();
+            if( neededKpi != null && relatedKpi != null)
+            {
+                rnkpi = neededKpi;
+                rnkpi.Insert(0, relatedKpi);
+            }
+            else
+            {
+                new UIAlertView("NULL Reference", "Null reference from previous window!", null, "Shucks.", null).Show();
+                rnkpi.Add(new Kpi { name = "Null reference" });
+            }
 
             UITableView _table;
             _table = new UITableView{
-                Frame = new CoreGraphics.CGRect(0,30,View.Bounds.Width,View.Bounds.Height),
+                Frame = new CoreGraphics.CGRect(0,100,View.Bounds.Width,View.Bounds.Height),
                 Source = new TableSourceModel(rnkpi)
             };
             View.AddSubview(_table);
-            //string a;
         }
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
@@ -97,9 +83,14 @@ namespace Phoneword
                 json_string = response.Content.ReadAsStringAsync().Result;
 
                 actions = JsonConvert.DeserializeObject<List<KpiAction>>(json_string);
-                if (relatedKpi != null)
+                if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError &&
+                    relatedKpi != null)
                 {
                     actionViewController.actions = actions;
+                }
+                else
+                {
+                    actionViewController.actions.Add(new KpiAction { kpi = response.StatusCode.ToString()});
                 }
 
             }

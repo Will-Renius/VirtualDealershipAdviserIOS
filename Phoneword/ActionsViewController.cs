@@ -21,14 +21,22 @@ namespace Phoneword
         {
             base.ViewDidLoad();
 
+            UITableView _table;
+            _table = new UITableView
+            {
+                Frame = new CoreGraphics.CGRect(0, 0, View.Bounds.Width, View.Bounds.Height),
+                Source = new TableActionModel(actions)
+            };
+            View.AddSubview(_table);
+
             // Perform any additional setup after loading the view, typically from a nib.
-            new UIAlertView(
-                "Temp",
-                "Processed...",
-                null,
-                "OK",
-                null
-                );
+            /* new UIAlertView(
+                 "Temp",
+                 "Processed...",
+                 null,
+                 "OK",
+                 null
+                 );*/
         }
     }
 }
