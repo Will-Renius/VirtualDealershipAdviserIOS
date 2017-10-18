@@ -6,21 +6,15 @@ using UIKit;
 
 namespace Phoneword.Models
 {
-
     public class TableSourceModel : UITableViewSource
     {
         List<Kpi> tableItems;
         string cellIdentifier = "TableCell";
-        string p_val_string;
+        KPIViewController owner;
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            //return tableItems.Length; //Number of rows in length
-            //return 1;
-
             return tableItems.Count;
-            
-            //return 5;
         }
 
 
@@ -30,13 +24,10 @@ namespace Phoneword.Models
             if (cell == null)
                 cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
 
-            //cell.TextLabel.Text = tableItems[indexPath.Row];
-            if (tableItems[indexPath.Row] != null){
-                //p_val_string = @string.Format("kpi percentile {0:0.0%}", ViewBag.most_related_kpi.p_val);
-
-                //string.Format("kpi percentile {0:0.0%}", ViewBag.most_related_kpi.p_val);
-                //cell.TextLabel.Text = tableItems[indexPath.Row].name + ":" + tableItems[indexPath.Row].p_val.ToString().Substring(0,5);
-                cell.TextLabel.Text = "Kpi: " + tableItems[indexPath.Row].name + ", " + string.Format("Percentile: {0:0.0%}", tableItems[indexPath.Row].p_val);
+            if (tableItems[indexPath.Row] != null)
+            {
+                Kpi curKpi = tableItems[indexPath.Row];
+                cell.TextLabel.Text = $"{curKpi.name}: {curKpi.segment}, {string.Format("{0:0.0%}", curKpi.p_val)}";
             }
 
             else
@@ -48,9 +39,15 @@ namespace Phoneword.Models
             //No need for reloading etc.
         }
 
-        public TableSourceModel(List<Kpi> items)
+        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+        {
+            owner.setSelectedKpi(tableItems[indexPath.Row]);
+        }
+
+        public TableSourceModel(List<Kpi> items, KPIViewController Owner)
         {
             tableItems = items;
+            owner = Owner;
         }
     }
 }

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Phoneword</string>
+	<string>Virtual Dealership Adviser</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.companyname.Phoneword</string>
 	<key>CFBundleShortVersionString</key>
