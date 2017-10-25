@@ -68,7 +68,8 @@ namespace Phoneword
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
-            string BASE_URL = "http://virtualdealershipadvisorapi.azurewebsites.net/api/";
+            //string BASE_URL = "http://virtualdealershipadvisorapi.azurewebsites.net/api/";
+            string BASE_URL = "http://msufall2017virtualdealershipadviserapi.azurewebsites.net/api/"; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< New Post
             base.PrepareForSegue(segue, sender);
 
             var actionViewController = segue.DestinationViewController as ActionsViewController;

@@ -3,10 +3,6 @@ C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\bin\iPhoneSimula
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\ibtool\_BundleResourceWithLogicalName.items
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\actool\_PartialAppManifest.items
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\actool\_BundleResourceWithLogicalName.items
-C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\black-microphone-button.png
-C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\MP.png
-C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\white-microphone-button.png
-C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\Entitlements.plist
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.csprojResolveAssemblyReference.cache
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.csproj.CoreCompileInputs.cache
@@ -14,3 +10,7 @@ C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimula
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.pdb
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\bin\iPhoneSimulator\Debug\Newtonsoft.Json.dll
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\bin\iPhoneSimulator\Debug\Newtonsoft.Json.xml
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\black-microphone-button.png
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\MP.png
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\white-microphone-button.png
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\optimized\Entitlements.plist

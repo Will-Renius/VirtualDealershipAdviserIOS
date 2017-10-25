@@ -29,7 +29,8 @@ namespace Phoneword
         private SFSpeechRecognizer speechRecognizer = new SFSpeechRecognizer(new NSLocale("en_US"));
 
         private Kpi relatedKpi;
-        private List<Kpi> neededKpi;
+        public List<Kpi> neededKpi;
+        public string dealer_name;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -108,7 +109,8 @@ namespace Phoneword
         //https://developer.xamarin.com/guides/ios/getting_started/hello,_iOS_multiscreen/hello,_iOS_multiscreen_quickstart/
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
-            string BASE_URL = "http://virtualdealershipadvisorapi.azurewebsites.net/api/";
+            //string BASE_URL = "http://virtualdealershipadvisorapi.azurewebsites.net/api/";
+            string BASE_URL = "http://msufall2017virtualdealershipadviserapi.azurewebsites.net/api/"; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< New Post
             base.PrepareForSegue(segue, sender);
 
             var kpiViewController = segue.DestinationViewController as KPIViewController;
@@ -119,7 +121,7 @@ namespace Phoneword
 
             //============= Calling our API ======
             // will probably move this to a client class as well
-            string dealer_name = "omega";
+            //dealer_name = "omega";, replaced with sending dealer name from LoginController
             relatedKpi = new Kpi();
 
             string url, json_string, query;
@@ -145,6 +147,8 @@ namespace Phoneword
             }
 
             url = $"{BASE_URL}RelatedKpi?query={Uri.EscapeDataString(query)}&dealer_name={dealer_name}";
+            //url = $"{BASE_URL}RelatedKpi?query={Uri.EscapeDataString(query)}&dealer_name=Beta";
+            //Is the RelatedKpi different for each dealer
 
             //give'er 3 tries!
             for (int i = 0; i < 3; i++)
@@ -174,6 +178,8 @@ namespace Phoneword
                 json_string = response.Content.ReadAsStringAsync().Result;
                 //Says it expects json string to be a kpi model
                 relatedKpi = JsonConvert.DeserializeObject<Kpi>(json_string);
+
+                new UIAlertView("Returning related KPI\n", $"Here ya go: \"{relatedKpi.name + relatedKpi.p_val.ToString()}\"", null, "OK", null).Show();
 
                 if (relatedKpi == null)
                 {
