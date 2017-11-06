@@ -14,5 +14,25 @@ namespace Phoneword
     [Register ("ActionsViewController")]
     partial class ActionsViewController
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton EmailButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton TakeActionButton { get; set; }
+
+        void ReleaseDesignerOutlets ()
+        {
+            if (EmailButton != null) {
+                EmailButton.Dispose ();
+                EmailButton = null;
+            }
+
+            if (TakeActionButton != null) {
+                TakeActionButton.Dispose ();
+                TakeActionButton = null;
+            }
+        }
     }
 }

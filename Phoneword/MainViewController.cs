@@ -18,26 +18,124 @@ using System.Collections.Generic;
 
 //our namespaces
 using Phoneword.Models;
+using CoreGraphics;
 
 namespace Phoneword
 {
-    public partial class ViewController : UIViewController
+    public partial class MainViewController : UIViewController
     {
         private SFSpeechAudioBufferRecognitionRequest recognitionRequest;
         private SFSpeechRecognitionTask recognitionTask;
         private AVAudioEngine audioEngine = new AVAudioEngine();
         private SFSpeechRecognizer speechRecognizer = new SFSpeechRecognizer(new NSLocale("en_US"));
 
-        private Kpi relatedKpi;
-        public List<Kpi> neededKpi;
+        private Kpi relatedKpi;                 //Kpi most closely matched to dealer question
         public string dealer_name;
 
-        public ViewController(IntPtr handle) : base(handle)
+        public List<Kpi> neededKpi;            //List of dealer's worst KPI
+        private UIView activeview;             // Controller that activates the keyboard
+        private System.nfloat scroll_amount = 0.0f; //Amount of screen that will scroll
+        private System.nfloat bottom = 0.0f;    //Button point of the screen
+
+        private float offset = 10.0f;          // Extra offset
+        private bool moveViewUp = false;           //Whether the view moves up (depends on keyboard)
+
+
+
+        public MainViewController(IntPtr handle) : base(handle)
         {
+        }
+
+        private void KeyBoardUpNotification(NSNotification notification)
+        {//Moves the screen up, when the keyboard shows
+
+            //Getting the keyboards size
+            var val = (NSValue)notification.UserInfo.ValueForKey(UIKeyboard.FrameEndUserInfoKey);
+            CGRect r = val.CGRectValue;
+
+            // Find what view opened the keyboard
+            foreach (UIView view in this.View.Subviews)
+            {
+                if (view.IsFirstResponder)
+                    activeview = view;
+            }
+
+            // Bottom of the controller = initial position + height + offset      
+            bottom = (activeview.Frame.Y + activeview.Frame.Height + offset);
+
+            // Calculate how far we need to scroll
+            scroll_amount = (r.Height - (View.Frame.Size.Height - bottom));
+
+            // Perform the scrolling
+            if (scroll_amount > 0)
+            {
+                moveViewUp = true;
+                ScrollTheView(moveViewUp);
+            }
+            else
+            {
+                moveViewUp = false;
+            }
+
+        }
+
+        private void KeyBoardDownNotification(NSNotification notification)
+        {//Moves screen down when keyboard is dismissed
+            if (moveViewUp) { ScrollTheView(false); }
+        }
+
+
+        private void ScrollTheView(bool move)
+        {//Scroll view up or down
+
+            UIView.BeginAnimations(string.Empty, System.IntPtr.Zero);
+            UIView.SetAnimationDuration(0.3);
+
+            CGRect frame = View.Frame;
+
+            if (move)
+            {
+                frame.Y -= scroll_amount;
+            }
+            else
+            {
+                frame.Y += scroll_amount;
+                scroll_amount = 0;
+            }
+
+            View.Frame = frame;
+            UIView.CommitAnimations();
         }
 
         public override void ViewDidLoad()
         {
+            var g = new UITapGestureRecognizer(() => View.EndEditing(true));
+            g.CancelsTouchesInView = false; //for iOS5
+
+            View.AddGestureRecognizer(g);
+
+            /*this.EnterLabel.ShouldReturn += (textField) => {
+                textField.ResignFirstResponder();
+                return true;
+            };*/
+
+
+            //UIView _topKeyboard = new UIView();
+            //UIButton _done = new UIButton();
+
+            //_topKeyboard.Add(_done);
+
+            //this.InputAccessoryView = _topKeyboard;
+
+            // Keyboard popup
+            NSNotificationCenter.DefaultCenter.AddObserver
+            (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+
+            // Keyboard Down
+            NSNotificationCenter.DefaultCenter.AddObserver
+            (UIKeyboard.WillHideNotification, KeyBoardDownNotification);
+
+
             base.ViewDidLoad();
             // Perform any additional setup after loading the view, typically from a nib.
 

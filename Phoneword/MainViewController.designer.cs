@@ -11,7 +11,7 @@ using System.CodeDom.Compiler;
 namespace Phoneword
 {
     [Register ("ViewController")]
-    partial class ViewController
+    partial class MainViewController
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]

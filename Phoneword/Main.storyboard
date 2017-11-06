@@ -201,9 +201,6 @@
                                 <items>
                                     <navigationItem title="Title" id="2004"/>
                                 </items>
-                                <textAttributes key="titleTextAttributes">
-                                    <color key="textColor" colorSpace="calibratedRGB" red="0.94901960784313721" green="0.19607843137254902" blue="0.19607843137254902" alpha="1"/>
-                                </textAttributes>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <color key="barTintColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
                                 </variation>
@@ -265,19 +262,51 @@
                                     <color key="barTintColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
                                 </variation>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5230" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="16" y="70" width="154" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Take Action!">
+                                    <color key="titleShadowColor" colorSpace="calibratedRGB" red="0.92941176470588238" green="0.10980392156862745" blue="0.10980392156862745" alpha="1"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
+                                </state>
+                                <connections>
+                                    <segue id="5231" destination="5232" kind="show"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8226" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="205" y="70" width="154" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Send an Email">
+                                    <color key="titleShadowColor" colorSpace="calibratedRGB" red="0.92941176470588238" green="0.10980392156862745" blue="0.10980392156862745" alpha="1"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1"/>
+                                </state>
+                                <connections>
+                                    <segue id="8227" destination="8228" kind="show"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="2016"/>
+                                <exclude reference="5230"/>
+                                <exclude reference="8226"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="2016"/>
+                                <include reference="5230"/>
+                                <include reference="8226"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem title="Actions" id="2018" key="navigationItem"/>
+                    <connections>
+                        <outlet property="TakeActionButton" destination="5230" id="name-outlet-5230"/>
+                        <outlet property="EmailButton" destination="8226" id="name-outlet-8226"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1903" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

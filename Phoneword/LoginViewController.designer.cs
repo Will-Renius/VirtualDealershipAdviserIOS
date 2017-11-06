@@ -12,7 +12,7 @@ using UIKit;
 namespace Phoneword
 {
     [Register ("LoginController")]
-    partial class LoginController
+    partial class LoginViewController
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]

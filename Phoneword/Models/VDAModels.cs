@@ -12,6 +12,7 @@ namespace Phoneword.Models
     {
         public int id;
         public string name { get; set; }
+        public string model { get; set; }
         public int value { get; set; }
         public double p_val { get; set; }
         public string segment { get; set; }

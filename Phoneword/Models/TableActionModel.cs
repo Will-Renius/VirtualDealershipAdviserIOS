@@ -11,16 +11,12 @@ namespace Phoneword.Models
     {
         List<KpiAction> tableItems;
         string cellIdentifier = "TableCell";
+        ActionsViewController owner;
 
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            //return tableItems.Length; //Number of rows in length
-            //return 1;
-
-            return tableItems.Count;
-            
-            //return 5;
+            return tableItems.Count; //Number of rows in table
         }
 
 
@@ -44,9 +40,19 @@ namespace Phoneword.Models
             //No need for reloading etc.
         }
 
-        public TableActionModel(List<KpiAction> items)
+        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+        {
+            owner.setSelectedKpi(tableItems[indexPath.Row]); //Harry: Page halts, doesn't let you pick different action rows like you can with kpi
+            //Error: System.NullReferenceException: Object reference not set to an instance of an object
+
+            //Dan, Fixed it, the owner value was not added to the TableActionModel before
+        }
+
+
+        public TableActionModel(List<KpiAction> items, ActionsViewController Owner)
         {
             tableItems = items;
+            owner = Owner;
         }
     }
 }
