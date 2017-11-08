@@ -61,8 +61,14 @@ namespace Phoneword
             _table = new UITableView
             {
                 Frame = new CoreGraphics.CGRect(0, 100, View.Bounds.Width, View.Bounds.Height),
-                Source = new TableSourceModel(rnkpi, this)
+                Source = new KPITableModel(rnkpi, this)
             };
+
+            //To get rid of table seperator lines
+            _table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+
+            //Set background color for the whole table
+            _table.BackgroundColor = UIColor.FromRGB(204, 255, 153);
             View.AddSubview(_table);
         }
 

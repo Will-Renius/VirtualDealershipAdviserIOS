@@ -13,3 +13,4 @@ C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimula
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.csproj.CoreCompileInputs.cache
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.exe
 C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.pdb
+C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.csprojResolveAssemblyReference.cache

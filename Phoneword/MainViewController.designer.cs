@@ -39,10 +39,6 @@ namespace Phoneword
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextView QuestionLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton SpeakerButton { get; set; }
 
         [Action ("HomeDeleteButton_TouchUpInside:")]
@@ -79,11 +75,6 @@ namespace Phoneword
             if (Querybox != null) {
                 Querybox.Dispose ();
                 Querybox = null;
-            }
-
-            if (QuestionLabel != null) {
-                QuestionLabel.Dispose ();
-                QuestionLabel = null;
             }
 
             if (SpeakerButton != null) {

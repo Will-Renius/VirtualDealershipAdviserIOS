@@ -16,6 +16,10 @@ namespace Phoneword
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel CredentialsLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton LoginButton { get; set; }
 
         [Outlet]
@@ -28,6 +32,11 @@ namespace Phoneword
 
         void ReleaseDesignerOutlets ()
         {
+            if (CredentialsLabel != null) {
+                CredentialsLabel.Dispose ();
+                CredentialsLabel = null;
+            }
+
             if (LoginButton != null) {
                 LoginButton.Dispose ();
                 LoginButton = null;
