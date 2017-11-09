@@ -64,9 +64,10 @@ namespace Phoneword
 
             TakeActionButton.TouchUpInside += (object sender, EventArgs e) =>
             {
-                UIApplication.SharedApplication.OpenUrl(new NSUrl("http://www.urbanscience.com/"));
-                UIApplication.SharedApplication.OpenUrl(new NSUrl(url));
-                //Opens 
+                if(!string.IsNullOrEmpty(url))
+                {
+                    UIApplication.SharedApplication.OpenUrl(new NSUrl(url));
+                }
             };
 
             EmailButton.TouchUpInside += (object sender, EventArgs e) =>
