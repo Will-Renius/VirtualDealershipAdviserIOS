@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>VirtualDealershipAdviser</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>VirtualDealershipAdviser</AssemblyName>
+    <AssemblyName>Virtual Dealership Adviser</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>

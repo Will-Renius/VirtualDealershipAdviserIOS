@@ -20,6 +20,11 @@
       <InterfaceDefinition>Main.storyboard</InterfaceDefinition>
       <Optimize>false</Optimize>
     </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\ibtool\Main.storyboardc\ActionsViewController.nib">
+      <LogicalName>Main.storyboardc/ActionsViewController.nib</LogicalName>
+      <InterfaceDefinition>Main.storyboard</InterfaceDefinition>
+      <Optimize>false</Optimize>
+    </_BundleResourceWithLogicalName>
     <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\ibtool\Main.storyboardc\BYZ-38-t0r-view-8bC-Xf-vdC.nib">
       <LogicalName>Main.storyboardc/BYZ-38-t0r-view-8bC-Xf-vdC.nib</LogicalName>
       <InterfaceDefinition>Main.storyboard</InterfaceDefinition>
@@ -30,18 +35,13 @@
       <InterfaceDefinition>Main.storyboard</InterfaceDefinition>
       <Optimize>false</Optimize>
     </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\ibtool\Main.storyboardc\KpiViewController.nib">
+      <LogicalName>Main.storyboardc/KpiViewController.nib</LogicalName>
+      <InterfaceDefinition>Main.storyboard</InterfaceDefinition>
+      <Optimize>false</Optimize>
+    </_BundleResourceWithLogicalName>
     <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\ibtool\Main.storyboardc\UINavigationController-1411.nib">
       <LogicalName>Main.storyboardc/UINavigationController-1411.nib</LogicalName>
-      <InterfaceDefinition>Main.storyboard</InterfaceDefinition>
-      <Optimize>false</Optimize>
-    </_BundleResourceWithLogicalName>
-    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\ibtool\Main.storyboardc\UIViewController-1791.nib">
-      <LogicalName>Main.storyboardc/UIViewController-1791.nib</LogicalName>
-      <InterfaceDefinition>Main.storyboard</InterfaceDefinition>
-      <Optimize>false</Optimize>
-    </_BundleResourceWithLogicalName>
-    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\ibtool\Main.storyboardc\UIViewController-1901.nib">
-      <LogicalName>Main.storyboardc/UIViewController-1901.nib</LogicalName>
       <InterfaceDefinition>Main.storyboard</InterfaceDefinition>
       <Optimize>false</Optimize>
     </_BundleResourceWithLogicalName>

@@ -31,14 +31,14 @@
                                 <variation key="heightClass=regular-widthClass=compact" image="urbansciencelogo.jpg"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to the Urban Science Virtual Dealership Adviser!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="453">
-                                <rect key="frame" x="56" y="442" width="263" height="119"/>
+                                <rect key="frame" x="56" y="2624" width="263" height="710"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="702">
-                                <rect key="frame" x="0.0" y="0.0" width="3" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textAttributes key="titleTextAttributes">
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -177,7 +177,7 @@
         <!--KPIs-->
         <scene sceneID="1790">
             <objects>
-                <viewController id="1791" customClass="KPIViewController" sceneMemberID="viewController">
+                <viewController id="1791" customClass="KPIViewController" sceneMemberID="viewController" storyboardIdentifier="KpiViewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1788"/>
                         <viewControllerLayoutGuide type="bottom" id="1789"/>
@@ -187,7 +187,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2003">
-                                <rect key="frame" x="0.0" y="0.0" width="5" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Title" id="2004"/>
@@ -204,9 +204,7 @@
                                     <color key="titleColor" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" red="0.92941176470588238" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="1901" kind="show" id="3731"/>
-                                </connections>
+                                <connections/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -235,7 +233,7 @@
         <!--Actions-->
         <scene sceneID="1900">
             <objects>
-                <viewController id="1901" customClass="ActionsViewController" sceneMemberID="viewController">
+                <viewController id="1901" customClass="ActionsViewController" sceneMemberID="viewController" storyboardIdentifier="ActionsViewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1898"/>
                         <viewControllerLayoutGuide type="bottom" id="1899"/>
@@ -245,7 +243,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2016">
-                                <rect key="frame" x="0.0" y="1" width="3" height="44"/>
+                                <rect key="frame" x="0.0" y="1" width="0.0" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Title" id="2017"/>
@@ -381,6 +379,6 @@
         <image name="MP.png" width="256" height="256"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedScreenMetrics key="destination" type="retina55"/>
+        <simulatedScreenMetrics key="destination" type="retina47"/>
     </simulatedMetricsContainer>
 </document>

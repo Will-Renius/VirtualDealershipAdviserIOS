@@ -23,23 +23,8 @@ namespace Phoneword
         private float offset = 10.0f;          // Extra offset
         private bool moveViewUp = false;           //Whether the view moves up (depends on keyboard)
 
-
-        //public new virtual UIView InputAccessoryView { [Export("InputAccessoryView")] get; set; }
-
-        //Move the keyboard up and down
-        //UIView _topKeyboard = new UIView();
-        //UIButton _done = new UIButton();
-
-        //_topKeyboard.Add(_done);
-
-        //this.InputAccessoryView = _topKeyboard;
-
-
         public LoginViewController(IntPtr handle) : base(handle)
-        {
-               
-
-        }
+        {}
 
 
         private void KeyBoardUpNotification(NSNotification notification)
@@ -102,6 +87,7 @@ namespace Phoneword
             View.Frame = frame;
             UIView.CommitAnimations();
         }
+
         public override void ViewDidLoad()
         {
 
@@ -168,9 +154,7 @@ namespace Phoneword
 
                     if (response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
-                        //new UIAlertView("Deserialization ERR", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
                         new UIAlertView("Invalid Credentials", "Invalid Username or Password, please enter valid credentials", null, "OK", null).Show();
-                        //Invalid credentials error message
                     }
                     else
                     {
@@ -179,10 +163,7 @@ namespace Phoneword
 
                         if (neededKpi == null)
                         {
-                            //new UIAlertView("GET /NeededKpi ERR:", response.StatusCode.ToString(), null, "OK", null).Show();
                             new UIAlertView("Bad Response Recieved", "The Database is currently unavailable, please try again another time", null, "OK", null).Show();
-                            //Error code message
-
                             //This is never reached because if the needed KPI is null, then response.StatusCode will not equal ok, I presume
                         }
 

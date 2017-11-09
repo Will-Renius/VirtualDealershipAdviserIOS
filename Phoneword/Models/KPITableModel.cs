@@ -8,15 +8,25 @@ namespace Phoneword.Models
 {
     public class KPITableModel : UITableViewSource
     {
-        List<Kpi> tableItems;
-        string cellIdentifier = "TableCell";
-        KPIViewController owner;
+        public delegate void NewPageHandler(object sender, EventArgs e);
+        public event NewPageHandler NewPageEvent;
+
+        private List<Kpi> tableItems;
+        private string cellIdentifier = "TableCell";
+
+        private Kpi selectedKpi;
+
+        public Kpi getSelected() { return selectedKpi; }
+
+        public KPITableModel(List<Kpi> items)
+        {
+            tableItems = items;
+        }
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
             return tableItems.Count;
         }
-
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         { //returned for each variable 
@@ -105,13 +115,9 @@ namespace Phoneword.Models
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            owner.setSelectedKpi(tableItems[indexPath.Row]);
+            selectedKpi = tableItems[indexPath.Row];
+            NewPageEvent(this, new EventArgs());
         }
 
-        public KPITableModel(List<Kpi> items, KPIViewController Owner)
-        {
-            tableItems = items;
-            owner = Owner;
-        }
     }
 }
