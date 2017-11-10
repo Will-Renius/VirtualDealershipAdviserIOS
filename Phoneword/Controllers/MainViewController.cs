@@ -19,6 +19,7 @@ using System.Collections.Generic;
 //our namespaces
 using Phoneword.Models;
 using CoreGraphics;
+using Phoneword.Gateways;
 
 namespace Phoneword
 {
@@ -39,6 +40,8 @@ namespace Phoneword
 
         private float offset = 10.0f;          // Extra offset
         private bool moveViewUp = false;           //Whether the view moves up (depends on keyboard)
+
+        private VDAGateway vdaGateway;
 
 
 
@@ -109,6 +112,8 @@ namespace Phoneword
 
         public override void ViewDidLoad()
         {
+            vdaGateway = new VDAGateway();
+
             var g = new UITapGestureRecognizer(() => View.EndEditing(true));
             g.CancelsTouchesInView = false; //for iOS5
 
@@ -190,6 +195,9 @@ namespace Phoneword
                     SpeakerButton.Highlighted = true;
                 }
             };
+
+            HomeSubmitButton.TouchDown += ProcessQuery;
+
         }
 
         public override void DidReceiveMemoryWarning()
@@ -204,116 +212,70 @@ namespace Phoneword
             Querybox.Placeholder = "Your question:";
         }
 
-        //https://developer.xamarin.com/guides/ios/getting_started/hello,_iOS_multiscreen/hello,_iOS_multiscreen_quickstart/
-        public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
+        public async void ProcessQuery(object sender, EventArgs e)
         {
-            //string BASE_URL = "http://virtualdealershipadvisorapi.azurewebsites.net/api/";
-            string BASE_URL = "http://msufall2017virtualdealershipadviserapi.azurewebsites.net/api/"; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< New Post
-            base.PrepareForSegue(segue, sender);
-
-            var kpiViewController = segue.DestinationViewController as KPIViewController;
+            var kpiViewController = Storyboard.InstantiateViewController("KpiViewController") as KPIViewController;
+            var MySender = sender as KPITableModel;
 
             //we gotta reset our list variables
             kpiViewController.neededKpi = new List<Kpi>();
             neededKpi = new List<Kpi>();
-
-            //============= Calling our API ======
-            // will probably move this to a client class as well
-            //dealer_name = "omega";, replaced with sending dealer name from LoginController
+            
             relatedKpi = new Kpi();
-
-            string url, json_string, query;
-            HttpClient client;
-            HttpResponseMessage response = new HttpResponseMessage();
-
-            client = new HttpClient();
-
-            client.DefaultRequestHeaders.Accept.Clear();
-            //add any default headers below this
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
 
             //grabbing related kpi
             if (string.IsNullOrEmpty(Querybox.Text))
             {
-                new UIAlertView("Query Error", "No query, defaulting to \"dealer insell\"...", null, "OK", null).Show();
-                query = "how is my insell";
-            }
-            else
-            {
-                query = Querybox.Text;
+                new UIAlertView("Error", "Entry required", null, "OK", null).Show();
+                return;
             }
 
-            url = $"{BASE_URL}RelatedKpi?query={Uri.EscapeDataString(query)}&dealer_name={dealer_name}";
-            //url = $"{BASE_URL}RelatedKpi?query={Uri.EscapeDataString(query)}&dealer_name=Beta";
-            //Is the RelatedKpi different for each dealer
+            string query = Querybox.Text;
 
-            //give'er 3 tries!
-            for (int i = 0; i < 3; i++)
+            using (var response = await vdaGateway.RelatedKpi(query, dealer_name) as HttpResponseMessage)
             {
-                response = client.GetAsync(url).Result;
-                if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    //some other stuff?
-                    break;
+                    new UIAlertView("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
+                    return;
                 }
-                else
-                {
-                    //BUG: name = Dealer Share doesnt work in api
-                    //some stuff probably
-                    continue;
-                }
-            }
 
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                new UIAlertView("GET /RelatedKpi ERR:", response.StatusCode.ToString(), null, "OK", null).Show();
-
-                relatedKpi = new Kpi { name = "ERR: Please consider redoing question..." };
-            }
-            else
-            {
-                json_string = response.Content.ReadAsStringAsync().Result;
-                //Says it expects json string to be a kpi model
+                string json_string = response.Content.ReadAsStringAsync().Result;
                 relatedKpi = JsonConvert.DeserializeObject<Kpi>(json_string);
 
-                new UIAlertView("Returning related KPI\n", $"Here ya go: \"{relatedKpi.name + relatedKpi.p_val.ToString()}\"", null, "OK", null).Show();
+                //new UIAlertView("Returning related KPI\n", $"Here ya go: \"{relatedKpi.name + relatedKpi.p_val.ToString()}\"", null, "OK", null).Show();
 
                 if (relatedKpi == null)
                 {
-                    new UIAlertView("Deserialization ERR", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
-
-                    relatedKpi = new Kpi { name = "ERR: Please consider redoing question..." };
+                    new UIAlertView("Server Error", $"Server returned incompatable model for relvant kpis", null, "OK", null).Show();
+                    return;
                 }
-            }
-            kpiViewController.relatedKpi = relatedKpi;
 
-            //grabbing needed kpis
-            url = $"{BASE_URL}NeededKpi?dealer_name={dealer_name}";
-            response = client.GetAsync(url).Result;
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                new UIAlertView("GET /NeededKpi ERR:", response.StatusCode.ToString(), null, "OK", null).Show();
-
-                neededKpi.Add(new Kpi { name = "Error finding your needed KPIs" });
+                kpiViewController.relatedKpi = relatedKpi;
             }
-            else
+
+            using (var response = await vdaGateway.NeededKpi(dealer_name))
             {
-                json_string = response.Content.ReadAsStringAsync().Result;
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    new UIAlertView("Server Error", "Server status for retrieving your needed KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
+                    return;
+                }
+
+                string json_string = response.Content.ReadAsStringAsync().Result;
                 neededKpi = JsonConvert.DeserializeObject<List<Kpi>>(json_string);
 
                 if (neededKpi == null)
                 {
-                    new UIAlertView("Deserialization ERR", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
-                    neededKpi.Add(new Kpi { name = "Error deserializing your needed kpis" });
+                    new UIAlertView("Server Error", $"Server returned incompatable model for needed kpis", null, "OK", null).Show();
+                    return;
                 }
+
+                kpiViewController.neededKpi = neededKpi;
             }
 
-            kpiViewController.neededKpi = neededKpi;
-
+            this.NavigationController.PushViewController(kpiViewController, true); //This code changes the view     
         }
-
-
 
         // ============== Speech Recognition Functions ============
         //  probably want to store in class or something in the future

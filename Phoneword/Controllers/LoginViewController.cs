@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using System.Drawing;
 using CoreGraphics;
 
+using Phoneword.Gateways;
+
 namespace Phoneword
 {
     public partial class LoginViewController : UIViewController
@@ -25,6 +27,8 @@ namespace Phoneword
 
         public LoginViewController(IntPtr handle) : base(handle)
         {}
+
+        private VDAGateway vdaGateway;
 
 
         private void KeyBoardUpNotification(NSNotification notification)
@@ -120,64 +124,47 @@ namespace Phoneword
             NSNotificationCenter.DefaultCenter.AddObserver
             (UIKeyboard.WillHideNotification, KeyBoardDownNotification);
 
+            vdaGateway = new VDAGateway();
 
+            LoginButton.TouchDown += LoginRequested;
+        }
 
-            neededKpi = new List<Kpi>(); //Used as validation for HTTP request
-            string BASE_URL = "http://msufall2017virtualdealershipadviserapi.azurewebsites.net/api/"; 
-            //New azure database website, information on each dealer
+        public async void LoginRequested(object sender, EventArgs e)
+        {
+            MainViewController viewcontroller = Storyboard.InstantiateViewController("MainViewController") as MainViewController;
+            KPITableModel MySender = sender as KPITableModel;
 
+            if (viewcontroller != null)
+            { //If the view controller is null for somereason, does not transfer 
 
-            string url, json_string, dealer_name, query;
+                string username = UsernameTextfield.Text;
+                string password = PasswordTextfield.Text;
 
-            HttpClient client;
-            HttpResponseMessage response = new HttpResponseMessage();
+                var response = await vdaGateway.VerifyLogin(username, password) as HttpResponseMessage;
 
-            client = new HttpClient();
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    new UIAlertView("Invalid Credentials", "Invalid Username or Password, please enter valid credentials", null, "OK", null).Show();
+                }
+                else
+                {
+                    string json_string = await response.Content.ReadAsStringAsync();
+                    var verifiedLogin = JsonConvert.DeserializeObject<VerifyLogin>(json_string) as VerifyLogin;
 
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-            MainViewController viewcontroller = Storyboard.InstantiateViewController("ViewController") as MainViewController;
-            //Determine next set of view to segue to
-
-            LoginButton.TouchUpInside += (object sender, EventArgs e) =>
-            {//Code for transitioning from login view to home view when login button is clicked
-               
-                if (viewcontroller != null)
-                { //If the view controller is null for somereason, does not transfer 
-
-                    dealer_name = UsernameTextfield.Text;
-                    url = $"{BASE_URL}NeededKpi?dealer_name={dealer_name}";
-                    response = client.GetAsync(url).Result;
-
-                    if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                    if (verifiedLogin == null)
                     {
-                        new UIAlertView("Invalid Credentials", "Invalid Username or Password, please enter valid credentials", null, "OK", null).Show();
+                        new UIAlertView("Server Error", "Server response unable to be read", null, "OK", null).Show();
                     }
+
                     else
                     {
-                        json_string = response.Content.ReadAsStringAsync().Result;
-                        neededKpi = JsonConvert.DeserializeObject<List<Kpi>>(json_string);
+                        //new UIAlertView("Welcome " + dealer_name," I am your Virtual Dealership Adviser", null, "OK", null).Show();
+                        viewcontroller.dealer_name = verifiedLogin.dealer_name; //Pass dealer's name to next view
 
-                        if (neededKpi == null)
-                        {
-                            new UIAlertView("Bad Response Recieved", "The Database is currently unavailable, please try again another time", null, "OK", null).Show();
-                            //This is never reached because if the needed KPI is null, then response.StatusCode will not equal ok, I presume
-                        }
-
-                        else
-                        {
-                            new UIAlertView("Welcome " + dealer_name," I am your Virtual Dealership Adviser", null, "OK", null).Show();
-                            viewcontroller.neededKpi = neededKpi; //Pass needed KPI to the next view (essentially the dealer's data)
-                            viewcontroller.dealer_name = dealer_name; //Pass dealer's name to next view
-
-                            this.NavigationController.PushViewController(viewcontroller, true); //This code changes the view
-                        }
+                        this.NavigationController.PushViewController(viewcontroller, true); //This code changes the view
                     }
                 }
-            };
+            }
         }
     }
 }

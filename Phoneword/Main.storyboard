@@ -8,15 +8,15 @@
         <array key="HelveticaNeue.ttc">
             <string>HelveticaNeue</string>
         </array>
-        <array key="TimesNewRomanBold.ttf">
-            <string>TimesNewRomanPS-BoldMT</string>
+        <array key="TimesNewRomanBoldItalic.ttf">
+            <string>TimesNewRomanPS-BoldItalicMT</string>
         </array>
     </customFonts>
     <scenes>
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -31,7 +31,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" image="urbansciencelogo.jpg"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to the Urban Science Virtual Dealership Adviser!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="453">
-                                <rect key="frame" x="56" y="2624" width="263" height="710"/>
+                                <rect key="frame" x="56" y="3242.5" width="263" height="877"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -78,9 +78,7 @@
                                     <color key="titleColor" red="0.4392156862745098" green="0.78431372549019607" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" red="0.4392156862745098" green="0.78431372549019607" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="1791" kind="show" id="2474"/>
-                                </connections>
+                                <connections/>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" id="2801">
                                 <rect key="frame" x="44" y="527" width="86" height="70"/>
@@ -177,7 +175,7 @@
         <!--KPIs-->
         <scene sceneID="1790">
             <objects>
-                <viewController id="1791" customClass="KPIViewController" sceneMemberID="viewController" storyboardIdentifier="KpiViewController">
+                <viewController storyboardIdentifier="KpiViewController" id="1791" customClass="KPIViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1788"/>
                         <viewControllerLayoutGuide type="bottom" id="1789"/>
@@ -204,7 +202,6 @@
                                     <color key="titleColor" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" red="0.92941176470588238" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -233,7 +230,7 @@
         <!--Actions-->
         <scene sceneID="1900">
             <objects>
-                <viewController id="1901" customClass="ActionsViewController" sceneMemberID="viewController" storyboardIdentifier="ActionsViewController">
+                <viewController storyboardIdentifier="ActionsViewController" id="1901" customClass="ActionsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1898"/>
                         <viewControllerLayoutGuide type="bottom" id="1899"/>

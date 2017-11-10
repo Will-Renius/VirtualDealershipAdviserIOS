@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UIKit;
 
 using Phoneword.Models;
+using Phoneword.Gateways;
 
 //API client functions 
 using System.Net.Http;
@@ -12,7 +13,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Web;
-
+using System.Threading.Tasks;
 
 namespace Phoneword
 {
@@ -29,6 +30,8 @@ namespace Phoneword
         private UITableView _table;
         private KPITableModel TableSource;
 
+        private VDAGateway VDAGateway;
+
         public KPIViewController(IntPtr handle) : base(handle)
         {
         }
@@ -38,6 +41,7 @@ namespace Phoneword
             base.ViewDidLoad();
 
             List<Kpi> rnkpi = new List<Kpi>();
+            VDAGateway = new VDAGateway();
 
             if (neededKpi != null && relatedKpi != null)
             {
@@ -59,18 +63,16 @@ namespace Phoneword
             _table.BackgroundColor = UIColor.FromRGB(204, 255, 153);
             View.AddSubview(_table);
 
-            
+
             TableSource.NewPageEvent += KpiSelected;
         }
 
-        public void KpiSelected(object sender, EventArgs e)
+        public async void KpiSelected(object sender, EventArgs e)
         {
 
             ActionsViewController nextPage = this.Storyboard.InstantiateViewController("ActionsViewController") as ActionsViewController;
             KPITableModel MySender = sender as KPITableModel;
             Kpi selectedKpi = MySender.getSelected();
-
-            string BASE_URL = "http://msufall2017virtualdealershipadviserapi.azurewebsites.net/api/"; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< New Post
 
             if (nextPage != null)
             {
@@ -78,48 +80,15 @@ namespace Phoneword
                 actions = new List<KpiAction>();
 
                 //============= Calling our API ======
-                string url, json_string,
-                    threshold = ""; // for future use if we wanna define a threshold
-                HttpClient client;
-                HttpResponseMessage response = new HttpResponseMessage();
+                string json_string; // for future use if we wanna define a threshold
 
-                client = new HttpClient();
-
-                client.DefaultRequestHeaders.Accept.Clear();
-                //add any default headers below this
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //grabbing related kpi
-                //checking if I selected any kpi
                 if (string.IsNullOrEmpty(selectedKpi.name))
                 {
                     new UIAlertView("Selection Error", "Please select a KPI", null, "OK", null).Show();
                     return;
                 }
 
-                url = $"{BASE_URL}Actions?name={Uri.EscapeDataString(selectedKpi.name)}&value={selectedKpi.p_val}";
-                if(!string.IsNullOrEmpty(threshold))
-                {
-                    url = url + $"&threshold={threshold}";
-                }
-
-                //give'er 3 tries!
-                for (int i = 0; i < 3; i++)
-                {
-                    response = client.GetAsync(url).Result;
-                    if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
-                    {
-                        //some other stuff?
-                        break;
-                    }
-                    else
-                    {
-                        //BUG: name = Dealer Share doesnt work in api
-                        //some stuff probably
-                        continue;
-                    }
-                }
+                var response = await VDAGateway.Actions(selectedKpi.name, selectedKpi.p_val);
 
                 //if we still have internal server error
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
@@ -130,23 +99,19 @@ namespace Phoneword
 
                 json_string = response.Content.ReadAsStringAsync().Result;
                 actions = JsonConvert.DeserializeObject<List<KpiAction>>(json_string);
+
                 if (actions == null)
                 {
                     new UIAlertView("Deserialization Error", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
                     return;
                 }
 
-
                 nextPage.actions = new List<KpiAction>();
-
                 nextPage.actions = actions;
 
-
                 this.NavigationController.PushViewController(nextPage, true); //This code changes the view
-
             }
         }
     }
 
 }
- 

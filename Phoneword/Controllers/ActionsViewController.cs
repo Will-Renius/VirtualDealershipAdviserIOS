@@ -100,19 +100,6 @@ namespace Phoneword
 
                 }
             };
-            // Perform any additional setup after loading the view, typically from a nib.
-            /* new UIAlertView(
-                 "Temp",
-                 "Processed...",
-                 null,
-                 "OK",
-                 null
-                 );*/
-        }
-
-        public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
-        {
-           // string filler = "filler";
         }
     }
 }
