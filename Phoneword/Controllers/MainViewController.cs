@@ -214,6 +214,7 @@ namespace Phoneword
 
         public async void ProcessQuery(object sender, EventArgs e)
         {
+            HomeSubmitButton.UserInteractionEnabled = false;
             var kpiViewController = Storyboard.InstantiateViewController("KpiViewController") as KPIViewController;
             var MySender = sender as KPITableModel;
 
@@ -273,8 +274,8 @@ namespace Phoneword
 
                 kpiViewController.neededKpi = neededKpi;
             }
-
             this.NavigationController.PushViewController(kpiViewController, true); //This code changes the view     
+            HomeSubmitButton.UserInteractionEnabled = true;
         }
 
         // ============== Speech Recognition Functions ============

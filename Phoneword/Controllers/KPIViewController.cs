@@ -69,7 +69,6 @@ namespace Phoneword
 
         public async void KpiSelected(object sender, EventArgs e)
         {
-
             ActionsViewController nextPage = this.Storyboard.InstantiateViewController("ActionsViewController") as ActionsViewController;
             KPITableModel MySender = sender as KPITableModel;
             Kpi selectedKpi = MySender.getSelected();

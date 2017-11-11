@@ -31,7 +31,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" image="urbansciencelogo.jpg"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to the Urban Science Virtual Dealership Adviser!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="453">
-                                <rect key="frame" x="56" y="3242.5" width="263" height="877"/>
+                                <rect key="frame" x="56" y="3604.5" width="263" height="975"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -78,7 +78,6 @@
                                     <color key="titleColor" red="0.4392156862745098" green="0.78431372549019607" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" red="0.4392156862745098" green="0.78431372549019607" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections/>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" id="2801">
                                 <rect key="frame" x="44" y="527" width="86" height="70"/>

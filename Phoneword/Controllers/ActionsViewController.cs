@@ -6,6 +6,9 @@ using Phoneword.Models;
 using System.Collections.Generic;
 using MessageUI;
 
+using Phoneword.Gateways;
+using System.Net.Http;
+
 namespace Phoneword
 {
     public partial class ActionsViewController : UIViewController
@@ -70,10 +73,31 @@ namespace Phoneword
                 }
             };
 
-            EmailButton.TouchUpInside += (object sender, EventArgs e) =>
+            EmailButton.TouchUpInside += async (object sender, EventArgs e) =>
             {
+                /*
+                //What I was testing the EmailAction function with
+                Email myemail = new Email
+                {
+                    //Will definitely have to change this if this ever gets implemented as a real project
+                    //  or else Ill be getting emails. Funny thought
+                    sender_email = "grenfel5@msu.edu",
+                    sender_name = "Bilbo Baggins",
+                    receiver_email = "jgrenfell30@gmail.com",
+                    receiver_name = "Frodo Baggins",
+                    message = "This is a test message coming at you from Visual Studio! Hello world! " + selectedAction.kpi + selectedAction.actionLink,
+                    personal_message = "And heres a little something personal ;)"
+                };
+
+                VDAGateway gateway = new VDAGateway();
+
+                HttpResponseMessage response = await gateway.EmailAction(myemail);
+                
+                return;
+                */
                 if (MFMailComposeViewController.CanSendMail)
                 {
+                    
                     //Take a screen shot of the image
                     UIGraphics.BeginImageContext(View.Frame.Size);
                     View.DrawViewHierarchy(View.Frame, true);
@@ -97,7 +121,6 @@ namespace Phoneword
                     this.PresentViewController(mailController, true, null);
 
                     new UIAlertView("Thank you for using Virtual Dealership Adviser", " An email has been sent to your desired recipient", null, "OK", null);
-
                 }
             };
         }

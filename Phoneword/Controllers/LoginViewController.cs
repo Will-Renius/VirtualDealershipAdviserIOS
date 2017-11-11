@@ -12,6 +12,7 @@ using System.Drawing;
 using CoreGraphics;
 
 using Phoneword.Gateways;
+using System.Threading.Tasks;
 
 namespace Phoneword
 {
@@ -131,6 +132,10 @@ namespace Phoneword
 
         public async void LoginRequested(object sender, EventArgs e)
         {
+            //somehow need to lock the button from being pressed again
+            LoginButton.UserInteractionEnabled = false;
+
+
             MainViewController viewcontroller = Storyboard.InstantiateViewController("MainViewController") as MainViewController;
             KPITableModel MySender = sender as KPITableModel;
 
@@ -140,7 +145,9 @@ namespace Phoneword
                 string username = UsernameTextfield.Text;
                 string password = PasswordTextfield.Text;
 
-                var response = await vdaGateway.VerifyLogin(username, password) as HttpResponseMessage;
+                Task<HttpResponseMessage> TaskResponse = vdaGateway.VerifyLogin(username, password);
+
+                var response = await TaskResponse as HttpResponseMessage;
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -160,11 +167,14 @@ namespace Phoneword
                     {
                         //new UIAlertView("Welcome " + dealer_name," I am your Virtual Dealership Adviser", null, "OK", null).Show();
                         viewcontroller.dealer_name = verifiedLogin.dealer_name; //Pass dealer's name to next view
-
+                        
                         this.NavigationController.PushViewController(viewcontroller, true); //This code changes the view
                     }
                 }
             }
+
+            LoginButton.UserInteractionEnabled = true;
+
         }
     }
 }
