@@ -14,16 +14,8 @@ namespace Phoneword
     [Register ("KPIViewController")]
     partial class KPIViewController
     {
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton KPIViewActions { get; set; }
-
         void ReleaseDesignerOutlets ()
         {
-            if (KPIViewActions != null) {
-                KPIViewActions.Dispose ();
-                KPIViewActions = null;
-            }
         }
     }
 }

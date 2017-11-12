@@ -45,8 +45,8 @@ namespace Phoneword
 
             if (neededKpi != null && relatedKpi != null)
             {
-                rnkpi = neededKpi;
-                rnkpi.Insert(0, relatedKpi);
+                rnkpi = neededKpi; //Sets list to all the needkPIs
+                rnkpi.Insert(0, relatedKpi); //inserts KPI related to the question on top
             }
 
             TableSource = new KPITableModel(rnkpi);

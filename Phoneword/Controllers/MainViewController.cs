@@ -237,7 +237,15 @@ namespace Phoneword
             {
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    new UIAlertView("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
+                    if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        new UIAlertView("Error", "Chat bot service could not identify relevant KPI for your query", null, "OK", null).Show();
+                    }
+                    else
+                    {
+                        new UIAlertView("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
+                    }
+                    HomeSubmitButton.UserInteractionEnabled = true;
                     return;
                 }
 
@@ -249,6 +257,7 @@ namespace Phoneword
                 if (relatedKpi == null)
                 {
                     new UIAlertView("Server Error", $"Server returned incompatable model for relvant kpis", null, "OK", null).Show();
+                    HomeSubmitButton.UserInteractionEnabled = true;
                     return;
                 }
 
@@ -269,6 +278,7 @@ namespace Phoneword
                 if (neededKpi == null)
                 {
                     new UIAlertView("Server Error", $"Server returned incompatable model for needed kpis", null, "OK", null).Show();
+                    HomeSubmitButton.UserInteractionEnabled = true;
                     return;
                 }
 

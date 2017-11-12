@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Foundation;
 using UIKit;
+using System.Linq;
 
 namespace Phoneword.Models
 {
@@ -13,20 +14,66 @@ namespace Phoneword.Models
 
         private List<Kpi> tableItems;
         private string cellIdentifier = "TableCell";
+        // private Dictionary<string, List<Kpi>> indexedTableItems;
+        Dictionary<string, List<Kpi>> indexedTableItems = new Dictionary<string,List<Kpi>>();
 
         private Kpi selectedKpi;
 
         public Kpi getSelected() { return selectedKpi; }
 
+        string[] keys;
+
         public KPITableModel(List<Kpi> items)
         {
             tableItems = items;
+            var count = 0;
+
+            List<Kpi> relatedItems = new List<Kpi>();
+
+            List<Kpi> neededItems = new List<Kpi>();
+
+            foreach(var item in tableItems)
+            {
+                if(count == 0)
+                {
+                    relatedItems.Add(item);
+                    count += 1;
+                }
+                else
+                {
+                    neededItems.Add(item);
+                }
+            }
+
+            //Create empty section for related
+            string related = "Related";
+            indexedTableItems.Add(related, new List<Kpi>(relatedItems));
+            string needed = "Needed";
+            //Create empty section for needed
+            indexedTableItems.Add(needed, new List<Kpi>(neededItems));
+
+            keys = indexedTableItems.Keys.ToArray();
+;
+        }
+
+
+        public override nint NumberOfSections(UITableView tableView)
+        {
+            return keys.Length;
         }
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            return tableItems.Count;
+            //return tableItems.Count;
+            return indexedTableItems[keys[section]].Count;
         }
+
+        public override string TitleForHeader(UITableView tableView, nint section)
+        {
+            return keys[section];
+        }
+
+        //Shortcut could ge here butnot needed
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         { //returned for each variable 
@@ -47,6 +94,10 @@ namespace Phoneword.Models
 
             if (tableItems[indexPath.Row] != null)
             {
+                if(indexPath.Row == 0)
+                {
+                    //cell
+                }
 
                 if (indexPath.Row % 2 == 1)
                 {
