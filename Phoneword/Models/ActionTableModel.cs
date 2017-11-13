@@ -29,7 +29,7 @@ namespace Phoneword.Models
             //Attributes for action title string
             var attributes = new UIStringAttributes
             {
-                ForegroundColor = UIColor.Blue,
+                ForegroundColor = UIColor.Black,
                 Font = UIFont.FromName("Courier-Bold", 24), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
 
 

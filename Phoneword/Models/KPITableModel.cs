@@ -196,6 +196,8 @@ namespace Phoneword.Models
                  }*/
                 // prettyString.SetAttributes(KpiTextattributes.Dictionary, new NSRange(0, 4));
 
+
+                //Should also try making a blank UIView and try setting background color
                 if (curKpi.p_val >= .50) //under .2 is red
                 {
                     KpiTextattributes.ForegroundColor = UIColor.FromRGB(34,98,6); //Dark Green
