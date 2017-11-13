@@ -52,9 +52,9 @@ namespace Phoneword.Models
             }*/
 
             //Create empty section for related
-            string related = "Related";
+            string related = "Related To Your Question: ";
             indexedTableItems.Add(related, new List<Kpi>(relatedItems));
-            string needed = "Needed";
+            string needed = "Most Needed Areas Of Improvement: ";
             //Create empty section for needed
             indexedTableItems.Add(needed, new List<Kpi>(neededItems));
 
@@ -99,17 +99,35 @@ namespace Phoneword.Models
 
 
             //Attributes for action title string
-            var attributes = new UIStringAttributes
+            var KpiTextattributes = new UIStringAttributes
             {
-                ForegroundColor = UIColor.Blue,
+                ForegroundColor = UIColor.Red,
                 Font = UIFont.FromName("Courier-Bold", 24), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
 
-
-                UnderlineStyle = NSUnderlineStyle.Single
+               // UnderlineColor = UIColor.Green,
+               // UnderlineStyle = NSUnderlineStyle.Single
             };
 
-          //  if (tableItems[indexPath.Row] != null)
-          if(indexedTableItems[keys[indexPath.Section]][indexPath.Row] != null)
+            var segmentTextattributes = new UIStringAttributes
+            {
+                ForegroundColor = UIColor.Black,
+                Font = UIFont.FromName("Courier-Bold", 20), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
+
+                // UnderlineColor = UIColor.Green,
+                // UnderlineStyle = NSUnderlineStyle.Single
+            };
+
+            var valueTextattributes = new UIStringAttributes
+            {
+                ForegroundColor = UIColor.Black,
+                Font = UIFont.FromName("Courier-Bold", 20), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
+
+                // UnderlineColor = UIColor.Green,
+                // UnderlineStyle = NSUnderlineStyle.Single
+            };
+
+            //  if (tableItems[indexPath.Row] != null)
+            if (indexedTableItems[keys[indexPath.Section]][indexPath.Row] != null)
             {
                 if(indexPath.Row == 0)
                 {
@@ -130,15 +148,16 @@ namespace Phoneword.Models
                 cell.TextLabel.Lines = 0;
                 cell.TextLabel.LineBreakMode = UILineBreakMode.WordWrap;
                 cell.TextLabel.TextAlignment = UITextAlignment.Center;
+               // cell.TextLabel.Font = UIFont(18);
                 //cell.TextLabel.Font = UIFontAttributes.Bold;
 
                 //Header Stuff
                 //cell.ImageView.Frame 
 
                 //border stuff
-                /*cell.Layer.BorderColor = UIColor.FromRGB(204, 255, 153).CGColor; 
-                cell.Layer.BorderWidth = 5;
-                cell.Layer.MasksToBounds = true;*/
+               /* cell.Layer.BorderColor = UIColor.Red.CGColor;
+                cell.Layer.BorderWidth = .5f;*/
+                //cell.Layer.MasksToBounds = true;
 
                 //cell.Layer.CornerRadius = 6;
                 cell.Layer.ShadowOffset = new CoreGraphics.CGSize(3, 3);
@@ -154,19 +173,53 @@ namespace Phoneword.Models
                 Kpi curKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row];// tableItems[indexPath.Row];
 
 
-                var finalString = "KPI: " + curKpi.name + " \n" + "Segment: " + curKpi.segment + " \n" + "Value: " + curKpi.p_val;
+                var finalString = "KPI: " + curKpi.name + " \n" + "Segment: " + curKpi.segment + " \n" + string.Format("Value: {0:0.0%} " ,curKpi.p_val);
+
+                var kpiString = "KPI: " + curKpi.name + " \n";
+                var segmentString = "Segment: " + curKpi.segment + " \n";
+                var valueString = string.Format("Value: {0:0.0%} ", curKpi.p_val);
+
                 //var strings = "ACTION 1 \n";
                 //var inputs = strings + action;
-                var prettyString = new NSMutableAttributedString(finalString);
 
-               /* var endRange = 9;
+                //var prettyString = new NSMutableAttributedString(finalString);
 
-                if (indexPath.Row >= 9)
+                var prettyString1 = new NSMutableAttributedString(kpiString);
+                var prettyString2 = new NSMutableAttributedString(segmentString);
+                var prettyString3 = new NSMutableAttributedString(valueString);
+
+                /* var endRange = 9;
+
+                 if (indexPath.Row >= 9)
+                 {
+                     endRange = 10;
+                 }*/
+                // prettyString.SetAttributes(KpiTextattributes.Dictionary, new NSRange(0, 4));
+
+                if (curKpi.p_val >= .50) //under .2 is red
                 {
-                    endRange = 10;
-                }*/
+                    KpiTextattributes.ForegroundColor = UIColor.FromRGB(34,98,6); //Dark Green
+                   // prettyString.AddAttribute(NSString ForegrounColor = UIColor.Red,)
+                }else if((curKpi.p_val >= .30) && curKpi.p_val < .50)
+                {
+                    KpiTextattributes.ForegroundColor = UIColor.FromRGB(246,133,21); //Orange
+                }else if (curKpi.p_val < .20)
+                {
+                    KpiTextattributes.ForegroundColor = UIColor.FromRGB(183,17,17); //Dark Red
+                }
 
-               // prettyString.SetAttributes(attributes.Dictionary, new NSRange(0, endRange));
+                //Set attribute to the text
+                // prettyString.SetAttributes(KpiTextattributes.Dictionary, new NSRange(0, 4));
+
+                prettyString1.SetAttributes(KpiTextattributes.Dictionary, new NSRange(0, 4));
+                prettyString2.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 8));
+                prettyString3.SetAttributes(valueTextattributes.Dictionary, new NSRange(0, 6));
+
+
+                var prettyString = new NSMutableAttributedString() ;
+                prettyString.Append(prettyString1);
+                prettyString.Append(prettyString2);
+                prettyString.Append(prettyString3);
 
                 //Can apply other attributes to the rest of the text
                 cell.TextLabel.AttributedText = prettyString;

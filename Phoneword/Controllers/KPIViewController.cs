@@ -52,7 +52,7 @@ namespace Phoneword
             TableSource = new KPITableModel(rnkpi,relatedKpi); //Passing in needed list and related kpi seperately
             _table = new UITableView
             {
-                Frame = new CoreGraphics.CGRect(0, 100, View.Bounds.Width, View.Bounds.Height),
+                Frame = new CoreGraphics.CGRect(0, 0, View.Bounds.Width, View.Bounds.Height),
                 Source = TableSource
             };
 
