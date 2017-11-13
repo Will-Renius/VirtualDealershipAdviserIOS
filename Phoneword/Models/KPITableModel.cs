@@ -82,6 +82,13 @@ namespace Phoneword.Models
             return keys[section];
         }
 
+       /* public override UIView GetViewForHeader(UITableView tableView, nint section) //Overrides title for header 
+        {
+            //return base.GetViewForHeader(tableView, section); //use this.Bounds
+
+            var headerLabel = new UILabel (new CoreGraphics.CGRect())
+        }*/
+
         //Shortcut could ge here butnot needed
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
@@ -134,9 +141,10 @@ namespace Phoneword.Models
                 cell.Layer.MasksToBounds = true;*/
 
                 //cell.Layer.CornerRadius = 6;
-                cell.Layer.ShadowOffset = new CoreGraphics.CGSize(2, 2);
-                cell.Layer.ShadowOpacity = 5f;
+                cell.Layer.ShadowOffset = new CoreGraphics.CGSize(3, 3);
+                cell.Layer.ShadowOpacity = 2f;
                 cell.Layer.ShadowColor = UIColor.Black.CGColor;
+                //cell.Layer.MasksToBounds = true;
 
                 // var actionTitle = "Action ";
                 //cell.DetailTextLabel= rndm;
@@ -178,7 +186,7 @@ namespace Phoneword.Models
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            selectedKpi = tableItems[indexPath.Row];
+            selectedKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row]; //tableItems[indexPath.Row];
             NewPageEvent(this, new EventArgs());
         }
 
