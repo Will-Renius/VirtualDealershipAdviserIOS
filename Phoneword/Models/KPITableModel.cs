@@ -23,27 +23,33 @@ namespace Phoneword.Models
 
         string[] keys;
 
-        public KPITableModel(List<Kpi> items)
+        public KPITableModel(List<Kpi> neededList, Kpi relatedKpi)
         {
-            tableItems = items;
-            var count = 0;
+            //tableItems = neededList;
+           // tableItems.Insert(0, relatedKpi); //inserts KPI related to the question on top //For getcellMethod
+            // var count = 0;
 
             List<Kpi> relatedItems = new List<Kpi>();
+            relatedItems.Add(relatedKpi);
 
             List<Kpi> neededItems = new List<Kpi>();
+            neededItems = neededList;
 
-            foreach(var item in tableItems)
+           /* foreach(var item in tableItems)
             {
                 if(count == 0)
                 {
                     relatedItems.Add(item);
                     count += 1;
-                }
-                else
+                    string line = "adding" + item.name + "to related items.";
+                    Console.WriteLine(line);
+                }else if(count > 1)
                 {
                     neededItems.Add(item);
+                    string line = "adding" + item.name + "to needed items.";
+                    Console.WriteLine(line);
                 }
-            }
+            }*/
 
             //Create empty section for related
             string related = "Related";
@@ -51,6 +57,9 @@ namespace Phoneword.Models
             string needed = "Needed";
             //Create empty section for needed
             indexedTableItems.Add(needed, new List<Kpi>(neededItems));
+
+
+      
 
             keys = indexedTableItems.Keys.ToArray();
 ;
@@ -92,7 +101,8 @@ namespace Phoneword.Models
                 UnderlineStyle = NSUnderlineStyle.Single
             };
 
-            if (tableItems[indexPath.Row] != null)
+          //  if (tableItems[indexPath.Row] != null)
+          if(indexedTableItems[keys[indexPath.Section]][indexPath.Row] != null)
             {
                 if(indexPath.Row == 0)
                 {
@@ -128,10 +138,12 @@ namespace Phoneword.Models
                 cell.Layer.ShadowOpacity = 5f;
                 cell.Layer.ShadowColor = UIColor.Black.CGColor;
 
-               // var actionTitle = "Action ";
+                // var actionTitle = "Action ";
                 //cell.DetailTextLabel= rndm;
                 //var action = tableItems[indexPath.Row].actionP;
-                Kpi curKpi = tableItems[indexPath.Row];
+
+
+                Kpi curKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row];// tableItems[indexPath.Row];
 
 
                 var finalString = "KPI: " + curKpi.name + " \n" + "Segment: " + curKpi.segment + " \n" + "Value: " + curKpi.p_val;

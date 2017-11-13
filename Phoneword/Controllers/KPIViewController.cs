@@ -46,10 +46,10 @@ namespace Phoneword
             if (neededKpi != null && relatedKpi != null)
             {
                 rnkpi = neededKpi; //Sets list to all the needkPIs
-                rnkpi.Insert(0, relatedKpi); //inserts KPI related to the question on top
+                //rnkpi.Insert(0, relatedKpi); //inserts KPI related to the question on top
             }
 
-            TableSource = new KPITableModel(rnkpi);
+            TableSource = new KPITableModel(rnkpi,relatedKpi); //Passing in needed list and related kpi seperately
             _table = new UITableView
             {
                 Frame = new CoreGraphics.CGRect(0, 100, View.Bounds.Width, View.Bounds.Height),
