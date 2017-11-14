@@ -43,6 +43,7 @@ namespace Phoneword
 
         private VDAGateway vdaGateway;
 
+        string final_query;
 
 
         public MainViewController(IntPtr handle) : base(handle)
@@ -110,45 +111,9 @@ namespace Phoneword
             UIView.CommitAnimations();
         }
 
-        public override void ViewDidLoad()
+        private void initSpeakerButton()
         {
-            vdaGateway = new VDAGateway();
-
-            var g = new UITapGestureRecognizer(() => View.EndEditing(true));
-            g.CancelsTouchesInView = false; //for iOS5
-
-            View.AddGestureRecognizer(g);
-
-            /*this.EnterLabel.ShouldReturn += (textField) => {
-                textField.ResignFirstResponder();
-                return true;
-            };*/
-
-
-            //UIView _topKeyboard = new UIView();
-            //UIButton _done = new UIButton();
-
-            //_topKeyboard.Add(_done);
-
-            //this.InputAccessoryView = _topKeyboard;
-
-            // Keyboard popup
-            NSNotificationCenter.DefaultCenter.AddObserver
-            (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
-
-            // Keyboard Down
-            NSNotificationCenter.DefaultCenter.AddObserver
-            (UIKeyboard.WillHideNotification, KeyBoardDownNotification);
-
-
-            base.ViewDidLoad();
-            // Perform any additional setup after loading the view, typically from a nib.
-
             SpeakerButton.Enabled = false;
-
-            Querybox.Text = "";
-            Querybox.Placeholder = "Your question...";
-
 
             SFSpeechRecognizer.RequestAuthorization((SFSpeechRecognizerAuthorizationStatus auth) =>
             {
@@ -181,8 +146,6 @@ namespace Phoneword
             //Event triggered when the button is pressed
             SpeakerButton.TouchUpInside += delegate
             {
-                //MY BAE
-                //https://www.grapecity.com/en/blogs/how-to-use-speech-recognition-with-xamarin-ios
                 if (audioEngine.Running == true)
                 {
                     StopRecording();
@@ -191,13 +154,44 @@ namespace Phoneword
                 else
                 {
                     StartRecording();
-                    Querybox.Placeholder = "Listening...";
+                    YouAskedLabel.Text = "Listening...";
                     SpeakerButton.Highlighted = true;
                 }
             };
+        }
+
+        public override void ViewDidLoad()
+        {
+            vdaGateway = new VDAGateway();
+            final_query = "";
+            var g = new UITapGestureRecognizer(() => View.EndEditing(true));
+            g.CancelsTouchesInView = false; //for iOS5
+            
+            View.AddGestureRecognizer(g);
+
+            // Keyboard popup
+            NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+
+            // Keyboard Down
+            NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillHideNotification, KeyBoardDownNotification);
+
+            base.ViewDidLoad();
+
+            Querybox.Text = "";
+            Querybox.Placeholder = "Your question...";
+
+            YouAskedLabel.TextAlignment = UITextAlignment.Center;
+            YouAskedLabel.Text = "";
+            YouAskedLabel.LineBreakMode = UILineBreakMode.WordWrap;
+
+            initSpeakerButton();
 
             HomeSubmitButton.TouchDown += ProcessQuery;
 
+            Querybox.EditingDidEnd += delegate
+            {
+                final_query = Querybox.Text;
+            };
         }
 
         public override void DidReceiveMemoryWarning()
@@ -210,11 +204,14 @@ namespace Phoneword
         {
             Querybox.Text = "";
             Querybox.Placeholder = "Your question:";
+
+            YouAskedLabel.Text = "";
         }
 
         public async void ProcessQuery(object sender, EventArgs e)
         {
-            HomeSubmitButton.UserInteractionEnabled = false;
+            HomeSubmitButton.Enabled = false;
+
             var kpiViewController = Storyboard.InstantiateViewController("KpiViewController") as KPIViewController;
             var MySender = sender as KPITableModel;
 
@@ -225,15 +222,21 @@ namespace Phoneword
             relatedKpi = new Kpi();
 
             //grabbing related kpi
-            if (string.IsNullOrEmpty(Querybox.Text))
+            if (string.IsNullOrEmpty(final_query))
             {
-                new UIAlertView("Error", "Entry required", null, "OK", null).Show();
-                return;
+                if (!string.IsNullOrEmpty(Querybox.Text))
+                {
+                    final_query = Querybox.Text;
+                }
+                else
+                {
+                    new UIAlertView("Error", "Entry required", null, "OK", null).Show();
+                    HomeSubmitButton.Enabled = true;
+                    return;
+                }
             }
 
-            string query = Querybox.Text;
-
-            using (var response = await vdaGateway.RelatedKpi(query, dealer_name) as HttpResponseMessage)
+            using (var response = await vdaGateway.RelatedKpi(final_query, dealer_name) as HttpResponseMessage)
             {
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -245,19 +248,17 @@ namespace Phoneword
                     {
                         new UIAlertView("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
                     }
-                    HomeSubmitButton.UserInteractionEnabled = true;
+                    HomeSubmitButton.Enabled = true;
                     return;
                 }
 
                 string json_string = response.Content.ReadAsStringAsync().Result;
                 relatedKpi = JsonConvert.DeserializeObject<Kpi>(json_string);
 
-                //new UIAlertView("Returning related KPI\n", $"Here ya go: \"{relatedKpi.name + relatedKpi.p_val.ToString()}\"", null, "OK", null).Show();
-
                 if (relatedKpi == null)
                 {
                     new UIAlertView("Server Error", $"Server returned incompatable model for relvant kpis", null, "OK", null).Show();
-                    HomeSubmitButton.UserInteractionEnabled = true;
+                    HomeSubmitButton.Enabled = true;
                     return;
                 }
 
@@ -269,6 +270,7 @@ namespace Phoneword
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     new UIAlertView("Server Error", "Server status for retrieving your needed KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
+                    HomeSubmitButton.Enabled = true;
                     return;
                 }
 
@@ -278,14 +280,14 @@ namespace Phoneword
                 if (neededKpi == null)
                 {
                     new UIAlertView("Server Error", $"Server returned incompatable model for needed kpis", null, "OK", null).Show();
-                    HomeSubmitButton.UserInteractionEnabled = true;
+                    HomeSubmitButton.Enabled = true;
                     return;
                 }
 
                 kpiViewController.neededKpi = neededKpi;
             }
             this.NavigationController.PushViewController(kpiViewController, true); //This code changes the view     
-            HomeSubmitButton.UserInteractionEnabled = true;
+            HomeSubmitButton.Enabled = true;
         }
 
         // ============== Speech Recognition Functions ============
@@ -313,8 +315,8 @@ namespace Phoneword
                 {
                     if (result.Final == true)
                     {
-                        Querybox.Text = result.BestTranscription.FormattedString;
-
+                        YouAskedLabel.Text = "You asked: " + result.BestTranscription.FormattedString;
+                        final_query = result.BestTranscription.FormattedString;
                     }
                 }
             });

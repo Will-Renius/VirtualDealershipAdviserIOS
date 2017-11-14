@@ -31,15 +31,15 @@ namespace Phoneword
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel Listener { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextField Querybox { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton SpeakerButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel YouAskedLabel { get; set; }
 
         [Action ("HomeDeleteButton_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -67,11 +67,6 @@ namespace Phoneword
                 HomeSubmitButton = null;
             }
 
-            if (Listener != null) {
-                Listener.Dispose ();
-                Listener = null;
-            }
-
             if (Querybox != null) {
                 Querybox.Dispose ();
                 Querybox = null;
@@ -80,6 +75,11 @@ namespace Phoneword
             if (SpeakerButton != null) {
                 SpeakerButton.Dispose ();
                 SpeakerButton = null;
+            }
+
+            if (YouAskedLabel != null) {
+                YouAskedLabel.Dispose ();
+                YouAskedLabel = null;
             }
         }
     }

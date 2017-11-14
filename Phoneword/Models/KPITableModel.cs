@@ -14,7 +14,6 @@ namespace Phoneword.Models
 
         private List<Kpi> tableItems;
         private string cellIdentifier = "TableCell";
-        // private Dictionary<string, List<Kpi>> indexedTableItems;
         Dictionary<string, List<Kpi>> indexedTableItems = new Dictionary<string,List<Kpi>>();
 
         private Kpi selectedKpi;
@@ -25,31 +24,11 @@ namespace Phoneword.Models
 
         public KPITableModel(List<Kpi> neededList, Kpi relatedKpi)
         {
-            //tableItems = neededList;
-           // tableItems.Insert(0, relatedKpi); //inserts KPI related to the question on top //For getcellMethod
-            // var count = 0;
-
             List<Kpi> relatedItems = new List<Kpi>();
             relatedItems.Add(relatedKpi);
 
             List<Kpi> neededItems = new List<Kpi>();
             neededItems = neededList;
-
-           /* foreach(var item in tableItems)
-            {
-                if(count == 0)
-                {
-                    relatedItems.Add(item);
-                    count += 1;
-                    string line = "adding" + item.name + "to related items.";
-                    Console.WriteLine(line);
-                }else if(count > 1)
-                {
-                    neededItems.Add(item);
-                    string line = "adding" + item.name + "to needed items.";
-                    Console.WriteLine(line);
-                }
-            }*/
 
             //Create empty section for related
             string related = "Related To Your Question: ";
@@ -58,11 +37,7 @@ namespace Phoneword.Models
             //Create empty section for needed
             indexedTableItems.Add(needed, new List<Kpi>(neededItems));
 
-
-      
-
             keys = indexedTableItems.Keys.ToArray();
-;
         }
 
 
@@ -73,7 +48,6 @@ namespace Phoneword.Models
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            //return tableItems.Count;
             return indexedTableItems[keys[section]].Count;
         }
 
@@ -82,21 +56,14 @@ namespace Phoneword.Models
             return keys[section];
         }
 
-       /* public override UIView GetViewForHeader(UITableView tableView, nint section) //Overrides title for header 
-        {
-            //return base.GetViewForHeader(tableView, section); //use this.Bounds
-
-            var headerLabel = new UILabel (new CoreGraphics.CGRect())
-        }*/
-
         //Shortcut could ge here butnot needed
-
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         { //returned for each variable 
             UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
             if (cell == null)
+            {
                 cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
-
+            }
 
             //Attributes for action title string
             var KpiTextattributes = new UIStringAttributes
@@ -126,7 +93,6 @@ namespace Phoneword.Models
                 // UnderlineStyle = NSUnderlineStyle.Single
             };
 
-            //  if (tableItems[indexPath.Row] != null)
             if (indexedTableItems[keys[indexPath.Section]][indexPath.Row] != null)
             {
                 if(indexPath.Row == 0)
@@ -143,35 +109,16 @@ namespace Phoneword.Models
                 {
                     //lighter color
                     cell.BackgroundColor = UIColor.FromRGB(204, 255, 153);
-                    // cell.BackgroundColor = UIColor.FromRGB(204, 200, 153); //Random try for card view
                 }
                 cell.TextLabel.Lines = 0;
                 cell.TextLabel.LineBreakMode = UILineBreakMode.WordWrap;
                 cell.TextLabel.TextAlignment = UITextAlignment.Center;
-               // cell.TextLabel.Font = UIFont(18);
-                //cell.TextLabel.Font = UIFontAttributes.Bold;
 
-                //Header Stuff
-                //cell.ImageView.Frame 
-
-                //border stuff
-               /* cell.Layer.BorderColor = UIColor.Red.CGColor;
-                cell.Layer.BorderWidth = .5f;*/
-                //cell.Layer.MasksToBounds = true;
-
-                //cell.Layer.CornerRadius = 6;
                 cell.Layer.ShadowOffset = new CoreGraphics.CGSize(3, 3);
                 cell.Layer.ShadowOpacity = 2f;
                 cell.Layer.ShadowColor = UIColor.Black.CGColor;
-                //cell.Layer.MasksToBounds = true;
-
-                // var actionTitle = "Action ";
-                //cell.DetailTextLabel= rndm;
-                //var action = tableItems[indexPath.Row].actionP;
-
 
                 Kpi curKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row];// tableItems[indexPath.Row];
-
 
                 var finalString = "KPI: " + curKpi.name + " \n" + "Segment: " + curKpi.segment + " \n" + string.Format("Value: {0:0.0%} " ,curKpi.p_val);
 
@@ -244,6 +191,5 @@ namespace Phoneword.Models
             selectedKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row]; //tableItems[indexPath.Row];
             NewPageEvent(this, new EventArgs());
         }
-
     }
 }

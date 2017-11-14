@@ -63,14 +63,15 @@ namespace Phoneword
             _table.BackgroundColor = UIColor.FromRGB(204, 255, 153);
             View.AddSubview(_table);
 
-
             TableSource.NewPageEvent += KpiSelected;
         }
 
         public async void KpiSelected(object sender, EventArgs e)
         {
+            _table.UserInteractionEnabled = false;
             ActionsViewController nextPage = this.Storyboard.InstantiateViewController("ActionsViewController") as ActionsViewController;
             KPITableModel MySender = sender as KPITableModel;
+
             Kpi selectedKpi = MySender.getSelected();
 
             if (nextPage != null)
@@ -110,6 +111,8 @@ namespace Phoneword
 
                 this.NavigationController.PushViewController(nextPage, true); //This code changes the view
             }
+
+            _table.UserInteractionEnabled = true;
         }
     }
 

@@ -31,6 +31,8 @@ namespace Phoneword
 
         private VDAGateway vdaGateway;
 
+        LoadingOverlay loader;
+
 
         private void KeyBoardUpNotification(NSNotification notification)
         {//Moves the screen up, when the keyboard shows
@@ -118,22 +120,27 @@ namespace Phoneword
 
             //Moving keyboard up and down
             // Keyboard Goes up
-            NSNotificationCenter.DefaultCenter.AddObserver
-            (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+            NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.DidShowNotification, KeyBoardUpNotification);
 
             // Keyboard Dismissed
-            NSNotificationCenter.DefaultCenter.AddObserver
-            (UIKeyboard.WillHideNotification, KeyBoardDownNotification);
+            NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillHideNotification, KeyBoardDownNotification);
 
             vdaGateway = new VDAGateway();
 
             LoginButton.TouchDown += LoginRequested;
+
+            
         }
 
         public async void LoginRequested(object sender, EventArgs e)
         {
-            //somehow need to lock the button from being pressed again
-            LoginButton.UserInteractionEnabled = false;
+            var bounds = UIScreen.MainScreen.Bounds;
+
+            loader = new LoadingOverlay(bounds);
+            View.Add(loader);
+
+
+            LoginButton.Enabled = false;
 
 
             MainViewController viewcontroller = Storyboard.InstantiateViewController("MainViewController") as MainViewController;
@@ -172,8 +179,8 @@ namespace Phoneword
                     }
                 }
             }
-
-            LoginButton.UserInteractionEnabled = true;
+            LoginButton.Enabled = true;
+            loader.Hide();
 
         }
     }

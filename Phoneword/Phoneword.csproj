@@ -99,6 +99,7 @@
     <Compile Include="Controllers\LoginViewController.designer.cs">
       <DependentUpon>LoginViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\LoadingOverlay.cs" />
     <Compile Include="Gateways\VDAGateway.cs" />
     <Compile Include="Models\ActionTableModel.cs" />
     <Compile Include="Models\KPITableModel.cs" />
