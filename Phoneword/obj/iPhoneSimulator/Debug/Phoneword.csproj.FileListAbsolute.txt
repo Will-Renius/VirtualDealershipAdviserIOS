@@ -9,7 +9,6 @@ C:\Users\jmm\source\repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimul
 C:\Users\jmm\source\repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.csproj.CoreCompileInputs.cache
 C:\Users\jmm\source\repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\VirtualDealershipAdviser.exe
 C:\Users\jmm\source\repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\VirtualDealershipAdviser.pdb
-C:\Users\jmm\Source\Repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\Phoneword.csprojResolveAssemblyReference.cache
 C:\Users\jmm\source\repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\optimized\black-microphone-button.png
 C:\Users\jmm\source\repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\optimized\MP.png
 C:\Users\jmm\source\repos\VirtualDealershipAdviserIOS2\Phoneword\obj\iPhoneSimulator\Debug\optimized\white-microphone-button.png

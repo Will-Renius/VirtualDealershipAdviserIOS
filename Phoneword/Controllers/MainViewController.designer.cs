@@ -15,6 +15,10 @@ namespace Phoneword
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel DealershipNameLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel EnterLabel { get; set; }
 
         [Outlet]
@@ -39,6 +43,10 @@ namespace Phoneword
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel TitleLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel YouAskedLabel { get; set; }
 
         [Action ("HomeDeleteButton_TouchUpInside:")]
@@ -47,6 +55,11 @@ namespace Phoneword
 
         void ReleaseDesignerOutlets ()
         {
+            if (DealershipNameLabel != null) {
+                DealershipNameLabel.Dispose ();
+                DealershipNameLabel = null;
+            }
+
             if (EnterLabel != null) {
                 EnterLabel.Dispose ();
                 EnterLabel = null;
@@ -75,6 +88,11 @@ namespace Phoneword
             if (SpeakerButton != null) {
                 SpeakerButton.Dispose ();
                 SpeakerButton = null;
+            }
+
+            if (TitleLabel != null) {
+                TitleLabel.Dispose ();
+                TitleLabel = null;
             }
 
             if (YouAskedLabel != null) {

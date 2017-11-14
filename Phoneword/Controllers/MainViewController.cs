@@ -25,13 +25,14 @@ namespace Phoneword
 {
     public partial class MainViewController : UIViewController
     {
+        public VerifyLogin login_info;
+
         private SFSpeechAudioBufferRecognitionRequest recognitionRequest;
         private SFSpeechRecognitionTask recognitionTask;
         private AVAudioEngine audioEngine = new AVAudioEngine();
         private SFSpeechRecognizer speechRecognizer = new SFSpeechRecognizer(new NSLocale("en_US"));
 
         private Kpi relatedKpi;                 //Kpi most closely matched to dealer question
-        public string dealer_name;
 
         public List<Kpi> neededKpi;            //List of dealer's worst KPI
         private UIView activeview;             // Controller that activates the keyboard
@@ -80,7 +81,6 @@ namespace Phoneword
             {
                 moveViewUp = false;
             }
-
         }
 
         private void KeyBoardDownNotification(NSNotification notification)
@@ -177,6 +177,10 @@ namespace Phoneword
 
             base.ViewDidLoad();
 
+            DealershipNameLabel.Text = login_info.dealer_name;
+            DealershipNameLabel.LineBreakMode = UILineBreakMode.WordWrap;
+            
+
             Querybox.Text = "";
             Querybox.Placeholder = "Your question...";
 
@@ -236,7 +240,7 @@ namespace Phoneword
                 }
             }
 
-            using (var response = await vdaGateway.RelatedKpi(final_query, dealer_name) as HttpResponseMessage)
+            using (var response = await vdaGateway.RelatedKpi(final_query, login_info.dealer_name) as HttpResponseMessage)
             {
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -265,7 +269,7 @@ namespace Phoneword
                 kpiViewController.relatedKpi = relatedKpi;
             }
 
-            using (var response = await vdaGateway.NeededKpi(dealer_name))
+            using (var response = await vdaGateway.NeededKpi(login_info.dealer_name))
             {
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {

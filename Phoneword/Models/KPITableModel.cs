@@ -120,29 +120,15 @@ namespace Phoneword.Models
 
                 Kpi curKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row];// tableItems[indexPath.Row];
 
-                var finalString = "KPI: " + curKpi.name + " \n" + "Segment: " + curKpi.segment + " \n" + string.Format("Value: {0:0.0%} " ,curKpi.p_val);
-
                 var kpiString = "KPI: " + curKpi.name + " \n";
                 var segmentString = "Segment: " + curKpi.segment + " \n";
                 var valueString = string.Format("Value: {0:0.0%} ", curKpi.p_val);
 
-                //var strings = "ACTION 1 \n";
-                //var inputs = strings + action;
-
-                //var prettyString = new NSMutableAttributedString(finalString);
-
                 var prettyString1 = new NSMutableAttributedString(kpiString);
                 var prettyString2 = new NSMutableAttributedString(segmentString);
+                var brandString = new NSMutableAttributedString("Brand: " + curKpi.brand + " \n");
+                var modelString = new NSMutableAttributedString("Model: " + curKpi.model + " \n");
                 var prettyString3 = new NSMutableAttributedString(valueString);
-
-                /* var endRange = 9;
-
-                 if (indexPath.Row >= 9)
-                 {
-                     endRange = 10;
-                 }*/
-                // prettyString.SetAttributes(KpiTextattributes.Dictionary, new NSRange(0, 4));
-
 
                 //Should also try making a blank UIView and try setting background color
                 if (curKpi.p_val >= .50) //under .2 is red
@@ -162,12 +148,16 @@ namespace Phoneword.Models
 
                 prettyString1.SetAttributes(KpiTextattributes.Dictionary, new NSRange(0, 4));
                 prettyString2.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 8));
+                brandString.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 6));
+                modelString.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 6));
                 prettyString3.SetAttributes(valueTextattributes.Dictionary, new NSRange(0, 6));
 
 
                 var prettyString = new NSMutableAttributedString() ;
                 prettyString.Append(prettyString1);
                 prettyString.Append(prettyString2);
+                prettyString.Append(brandString);
+                prettyString.Append(modelString);
                 prettyString.Append(prettyString3);
 
                 //Can apply other attributes to the rest of the text

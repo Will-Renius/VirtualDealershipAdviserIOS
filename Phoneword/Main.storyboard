@@ -26,12 +26,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="452">
-                                <rect key="frame" x="56" y="76" width="263" height="222"/>
+                                <rect key="frame" x="56" y="177" width="263" height="222"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <variation key="heightClass=regular-widthClass=compact" image="urbansciencelogo.jpg"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to the Urban Science Virtual Dealership Adviser!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="453">
-                                <rect key="frame" x="56" y="977395.5" width="263" height="264390"/>
+                                <rect key="frame" x="56" y="3.66984E+08" width="263" height="266200.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -65,7 +65,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please ask me a question" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="1397">
-                                <rect key="frame" x="56" y="459" width="263" height="30"/>
+                                <rect key="frame" x="56" y="497" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -87,10 +87,24 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="15354" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" enabled="NO" text="You asked..." adjustsFontForContentSizeCategory="YES" numberOfLines="5" textAlignment="center">
-                                <rect key="frame" x="56" y="306" width="257" height="145"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You asked..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15354">
+                                <rect key="frame" x="59" y="407" width="257" height="82"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27301" text="VDA Company Client:">
+                                <rect key="frame" x="20" y="99" width="336" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="34672" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" text="Dealership Name" numberOfLines="2">
+                                <rect key="frame" x="58" y="136" width="260" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -106,6 +120,8 @@
                                 <exclude reference="2401"/>
                                 <exclude reference="2834"/>
                                 <exclude reference="15354"/>
+                                <exclude reference="27301"/>
+                                <exclude reference="34672"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -118,6 +134,8 @@
                                 <include reference="2401"/>
                                 <include reference="2834"/>
                                 <include reference="15354"/>
+                                <include reference="27301"/>
+                                <include reference="34672"/>
                             </mask>
                         </variation>
                     </view>
@@ -131,7 +149,9 @@
                         <outlet property="HomeSubmitButton" destination="2401" id="name-outlet-2401"/>
                         <outlet property="Querybox" destination="1397" id="name-outlet-1397"/>
                         <outlet property="SpeakerButton" destination="2834" id="name-outlet-2834"/>
+                        <outlet property="TitleLabel" destination="27301" id="name-outlet-27301"/>
                         <outlet property="YouAskedLabel" destination="15354" id="name-outlet-15354"/>
+                        <outlet property="DealershipNameLabel" destination="34672" id="name-outlet-34672"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

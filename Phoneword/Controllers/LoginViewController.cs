@@ -173,7 +173,7 @@ namespace Phoneword
                     else
                     {
                         //new UIAlertView("Welcome " + dealer_name," I am your Virtual Dealership Adviser", null, "OK", null).Show();
-                        viewcontroller.dealer_name = verifiedLogin.dealer_name; //Pass dealer's name to next view
+                        viewcontroller.login_info = verifiedLogin; //Pass dealer's name to next view
                         
                         this.NavigationController.PushViewController(viewcontroller, true); //This code changes the view
                     }
