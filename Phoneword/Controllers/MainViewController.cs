@@ -46,6 +46,8 @@ namespace Phoneword
 
         string final_query;
 
+        private LoadingOverlay loader;
+
 
         public MainViewController(IntPtr handle) : base(handle)
         {
@@ -192,6 +194,8 @@ namespace Phoneword
 
             HomeSubmitButton.TouchDown += ProcessQuery;
 
+            Querybox.ValueChanged += (sender, e) => final_query = Querybox.Text;
+
             Querybox.EditingDidEnd += delegate
             {
                 final_query = Querybox.Text;
@@ -212,8 +216,15 @@ namespace Phoneword
             YouAskedLabel.Text = "";
         }
 
+
+
         public async void ProcessQuery(object sender, EventArgs e)
         {
+            var bounds = UIScreen.MainScreen.Bounds;
+
+            loader = new LoadingOverlay(bounds);
+            View.Add(loader);
+
             HomeSubmitButton.Enabled = false;
 
             var kpiViewController = Storyboard.InstantiateViewController("KpiViewController") as KPIViewController;
@@ -236,6 +247,9 @@ namespace Phoneword
                 {
                     new UIAlertView("Error", "Entry required", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
+                    loader.Hide();
+                    YouAskedLabel = ""
+                    final_query = "";
                     return;
                 }
             }
@@ -253,6 +267,8 @@ namespace Phoneword
                         new UIAlertView("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
                     }
                     HomeSubmitButton.Enabled = true;
+                    loader.Hide();
+                    final_query = "";
                     return;
                 }
 
@@ -263,6 +279,8 @@ namespace Phoneword
                 {
                     new UIAlertView("Server Error", $"Server returned incompatable model for relvant kpis", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
+                    loader.Hide();
+                    final_query = "";
                     return;
                 }
 
@@ -275,6 +293,8 @@ namespace Phoneword
                 {
                     new UIAlertView("Server Error", "Server status for retrieving your needed KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
+                    loader.Hide();
+                    final_query = "";
                     return;
                 }
 
@@ -285,6 +305,8 @@ namespace Phoneword
                 {
                     new UIAlertView("Server Error", $"Server returned incompatable model for needed kpis", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
+                    loader.Hide();
+                    final_query = "";
                     return;
                 }
 
@@ -292,6 +314,8 @@ namespace Phoneword
             }
             this.NavigationController.PushViewController(kpiViewController, true); //This code changes the view     
             HomeSubmitButton.Enabled = true;
+            loader.Hide();
+            final_query = "";
         }
 
         // ============== Speech Recognition Functions ============
