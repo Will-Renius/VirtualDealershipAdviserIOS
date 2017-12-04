@@ -10,6 +10,8 @@ namespace Phoneword.Models
 {
     public class KPITableModel : UITableViewSource
     {
+
+
         public delegate void NewPageHandler(object sender, EventArgs e);
         public event NewPageHandler NewPageEvent;
 
@@ -60,18 +62,18 @@ namespace Phoneword.Models
         public override UIView GetViewForHeader(UITableView tableView, nint section)
         {
 
-            UILabel headerLabel = new UILabel();
+            UILabel headerLabel = new UILabel(new CGRect(0,0,UIScreen.MainScreen.Bounds.Width,50));
 
             string headerText = "";
 
             if (section == 0)
             {
-                headerText = "Here Is What I Found To Be The Most Related To Your Question: "; //using 20 font for this
+                headerText = "Here Is What I Found For Your Question: "; //using 20 font for this
             }
             else
             {
 
-                headerText = "Look Below To See Your Most Needed Areas Of Improvement: ";
+                headerText = "Needed Areas Of Improvement: ";
 
             }
 
@@ -80,11 +82,17 @@ namespace Phoneword.Models
 
             headerLabel.Text = headerText;
 
-            headerLabel.Font = UIFont.FromName("HelveticaNeue-Bold", 20);
+            headerLabel.Font = UIFont.FromName("HelveticaNeue-Bold", 18);
 
-            headerLabel.BackgroundColor = UIColor.White;
+            headerLabel.BackgroundColor = UIColor.FromRGB(179, 149, 86);
 
-            headerLabel.TextColor = UIColor.Black;
+            //headerLabel.Layer.BorderColor = UIColor.FromRGB(179, 149, 86).CGColor;
+
+            //headerLabel.Layer.BorderWidth = 10.0f;
+
+
+
+            headerLabel.TextColor = UIColor.White;
 
             /*headerLabel.ShadowOffset = new CoreGraphics.CGSize(10, 10);
             //headerLabel.ShadowOpacity = 2f;
@@ -98,6 +106,12 @@ namespace Phoneword.Models
 
         }
 
+        public override nfloat GetHeightForHeader(UITableView tableView, nint section){
+
+            return 40;
+        }
+
+
         //Shortcut could ge here butnot needed
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         { //returned for each variable 
@@ -106,8 +120,7 @@ namespace Phoneword.Models
             {
                 cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
             }
-
-            //cell.SelectionStyle = UITableViewCellSelectionStyle.None;
+            //cell.SelectionStyle = UITableViewCellSelectionStyle.Gray;
 
             //Sets background color to blue upon selection
             /*UIView MyView = new UIView();
@@ -181,17 +194,46 @@ namespace Phoneword.Models
 
                 //Making view for card view appearance
 
-                // 350 is the width                 // UILabel myLabel = new UILabel(new CGRect(minX + 12, minY + 10, 350, 120));                 UILabel myLabel = new UILabel(new CGRect(12,12, 350, 120));                   myLabel.BackgroundColor = UIColor.White;                 //myLabel.Sha                  //Make view for Selection of cell                  UIView MyView = new UIView();                 MyView.BackgroundColor = UIColor.White;//UIColor.FromWhiteAlpha(1.0f, 1.0f);                 myLabel.AddSubview(MyView);                 cell.SelectedBackgroundView = MyView;                  //Selection style                 //cell.SelectionStyle = UITableViewCellSelectionStyle.None;                   myLabel.Layer.BorderWidth = 0.8f;
+                // 350 is the width                 // UILabel myLabel = new UILabel(new CGRect(minX + 12, minY + 10, 350, 120));                 UILabel myLabel = new UILabel(new CGRect(12,12, 350, 134));                   myLabel.BackgroundColor = UIColor.White;                 //myLabel.Sha                  //Make view for Selection of cell 
+                 UIView MyView = new UIView();                 MyView.BackgroundColor = UIColor.White;//UIColor.FromWhiteAlpha(1.0f, 1.0f);                 myLabel.AddSubview(MyView);                 cell.SelectedBackgroundView = MyView;                  //Selection style                 //cell.SelectionStyle = UITableViewCellSelectionStyle.None;                   myLabel.Layer.BorderWidth = 0.8f;
 
                 //Bronze border color
-                myLabel.Layer.BorderColor = UIColor.FromRGB(179,149,86).CGColor;                 myLabel.Layer.CornerRadius = 4.0f;                  myLabel.Layer.MasksToBounds = false;                 //myLabel.Layer.MasksToBounds = true;                  //var shadowPath = UIBezierPath.FromRoundedRect(new CGRect(0.0f, 0.0f, 200.0f, 100.0f), 50.0f);                  //Color for shadow                 myLabel.Layer.ShadowColor = UIColor.Black.CGColor;                  //Set offset for shadow                 myLabel.Layer.ShadowOffset = new CoreGraphics.CGSize(0, 0); //Width and height                  //myLabel.MasksToBound                  myLabel.Layer.ShadowOpacity = 0.1f;                 //myLabel.ShadowOffset = new CoreGraphics.CGSize(10, 10);                 // myLabel.ShadowColor = null;                 //myLabel.Layer.ShadowPath = shadowPath.CGPath;                  //Sets the shadow upon selection, sets the inside of cell to shadowcolor                 UIBezierPath shadowPath = UIBezierPath.FromRoundedRect(myLabel.Bounds, 4.0f); //Bounds, cornerRadius                 myLabel.Layer.ShadowPath = shadowPath.CGPath;                  myLabel.Lines = 0;                 myLabel.LineBreakMode = UILineBreakMode.WordWrap;                 myLabel.TextAlignment = UITextAlignment.Center;                 // myLabel.Text = tableItems[0].actionP;                  //myView.Layer.CornerRadius = 4;                 //cell.ContentView.AddSubview(myView);                  //myLabel.Frame = CoreGraphics.CGRectEdge(myView.Bounds, 8, 8);                  cell.ContentView.AddSubview(myLabel);                   //Can apply other attributes to the rest of the text                 //myLabel.AttributedText = prettyString;
+                myLabel.Layer.BorderColor = UIColor.FromRGB(179,149,86).CGColor;                 myLabel.Layer.CornerRadius = 4.0f;                  myLabel.Layer.MasksToBounds = false;                 //myLabel.Layer.MasksToBounds = true;                  //var shadowPath = UIBezierPath.FromRoundedRect(new CGRect(0.0f, 0.0f, 200.0f, 100.0f), 50.0f);                  //Color for shadow                 myLabel.Layer.ShadowColor = UIColor.Black.CGColor;                  //Set offset for shadow                 myLabel.Layer.ShadowOffset = new CoreGraphics.CGSize(0, 0); //Width and height                  //myLabel.MasksToBound                  myLabel.Layer.ShadowOpacity = 0.1f;                 //myLabel.ShadowOffset = new CoreGraphics.CGSize(10, 10);                 // myLabel.ShadowColor = null;                 //myLabel.Layer.ShadowPath = shadowPath.CGPath;                  //Sets the shadow upon selection, sets the inside of cell to shadowcolor                 UIBezierPath shadowPath = UIBezierPath.FromRoundedRect(myLabel.Bounds, 4.0f); //Bounds, cornerRadius                 myLabel.Layer.ShadowPath = shadowPath.CGPath;                  myLabel.Lines = 0;                 myLabel.LineBreakMode = UILineBreakMode.WordWrap;                 myLabel.TextAlignment = UITextAlignment.Center;
+
+                // myLabel.Text = tableItems[0].actionP;
+
+                //myView.Layer.CornerRadius = 4;
+                //cell.ContentView.AddSubview(myView);
+
+                //myLabel.Frame = CoreGraphics.CGRectEdge(myView.Bounds, 8, 8);
+
+                if(cell.ContentView.Subviews.Length != 0)
+                {
+                    cell.ContentView.Subviews[0].RemoveFromSuperview();
+                }
+                 cell.ContentView.AddSubview(myLabel);                  //Can apply other attributes to the rest of the text                 //myLabel.AttributedText = prettyString;
 
 
                 //Code ends here
+                UILabel temp = (UILabel)cell.ContentView.Subviews[0];
 
                 Kpi curKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row];// tableItems[indexPath.Row];
 
-                var vehicleString = curKpi.brand + " " + curKpi.model + " " + curKpi.name + "\n" + "\n";
+                var brand = curKpi.brand;
+                var model = curKpi.model;
+                var brandSpace = " ";
+                var modelSpace = " ";
+                if(brand == "all"){
+                    brand = "";
+                    brandSpace = "";
+                }
+
+                if (model == "all"){
+                    model = "";
+                    modelSpace = "";
+                }
+
+                var vehicleString = brand + brandSpace + model + modelSpace + curKpi.name + "\n" + "\n";
                 var percentileString = string.Format("Percentile: {0:0.0%} ",curKpi.p_val) + "\n" + "\n";
 
                 var performanceString = "Nothing"; //Good, Bad, or Fair
@@ -201,9 +243,9 @@ namespace Phoneword.Models
                     //valueTextattributes.ForegroundColor = UIColor.FromRGB(34, 98, 6); //Dark Green
                                                                                       // prettyString.AddAttribute(NSString ForegrounColor = UIColor.Red,)
                 }
-                else if ((curKpi.p_val >= .30) && curKpi.p_val < .50)
+                else if ((curKpi.p_val >= .20) && curKpi.p_val < .50)
                 {
-                    performanceString = "Fair \n ";
+                    performanceString = "Okay \n ";
                     //valueTextattributes.ForegroundColor = UIColor.Yellow;//UIColor.FromRGB(196,165,9); //Orange
                 }
                 else if (curKpi.p_val < .20)
@@ -225,14 +267,14 @@ namespace Phoneword.Models
                 //Should also try making a blank UIView and try setting background color
                 if (curKpi.p_val >= .50) //under .2 is red
                 {
-                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(34,98,6); //Dark Green
+                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(112,200,47); //Urban Science Green
                    // prettyString.AddAttribute(NSString ForegrounColor = UIColor.Red,)
-                }else if((curKpi.p_val >= .30) && curKpi.p_val < .50)
+                }else if((curKpi.p_val >= .20) && curKpi.p_val < .50)
                 {
-                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(239,208,52); //Darker Yellow
+                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(0,159,194); //Urban Science Blue
                 }else if (curKpi.p_val < .20)
                 {
-                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(183,17,17); //Dark Red
+                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(255,117,51); //Urban Science Orange
                 }
 
                 //Set attribute to the text
@@ -241,6 +283,12 @@ namespace Phoneword.Models
                 var length1 = vehicleString.Length;
                 var length2 = percentileString.Length;
                 var length3 = performanceString.Length;
+
+                //Simple conversion to change font length if KPI title is too long to display
+                if (length1 >= 35){
+                    var fontSize = 20 - ((length1 - 35)/2);
+                    vehicleTextattributes.Font = UIFont.FromName("HelveticaNeue-Bold", fontSize);
+                }
 
                 prettyString1.SetAttributes(vehicleTextattributes.Dictionary, new NSRange(0, length1)); //try (lengt)
                 prettyString2.SetAttributes(percentileTextattributes.Dictionary, new NSRange(0, length2)); //try (length1+1, length2?)
@@ -279,7 +327,7 @@ namespace Phoneword.Models
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
         {
             //return base.GetHeightForRow(tableView, indexPath);
-            return 146;
+            return 156;
         }
 
         /*[Foundation.Export("prepareForReuse")]
@@ -293,6 +341,9 @@ namespace Phoneword.Models
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
+            //UITableViewCell cell = GetCell(tableView, indexPath);
+            //UILabel temp = (UILabel)cell.ContentView.Subviews[cell.ContentView.Subviews.Length - 1];
+            //temp.BackgroundColor = UIColor.Red;
             selectedKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row]; //tableItems[indexPath.Row];
             NewPageEvent(this, new EventArgs());
         }

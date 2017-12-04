@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13169" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1411">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1411">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -55,18 +55,6 @@
                                     <color key="barTintColor" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1" colorSpace="calibratedRGB"/>
                                 </variation>
                             </navigationBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="929">
-                                <rect key="frame" x="226" y="548" width="133" height="58"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <state key="normal" title="Delete">
-                                    <color key="titleColor" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="HomeDeleteButton_TouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1392"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please ask me a question" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="1397">
                                 <rect key="frame" x="56" y="497" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -74,7 +62,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2401">
-                                <rect key="frame" x="23" y="562" width="114" height="30"/>
+                                <rect key="frame" x="242" y="561" width="114" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                 <state key="normal" title="Submit">
@@ -111,6 +99,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="929">
+                                <rect key="frame" x="20" y="547" width="133" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" red="0.45882352941176469" green="0.74509803921568629" blue="0.25882352941176473" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="HomeDeleteButton_TouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1392"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <variation key="default">
@@ -118,13 +118,13 @@
                                 <exclude reference="452"/>
                                 <exclude reference="453"/>
                                 <exclude reference="702"/>
-                                <exclude reference="929"/>
                                 <exclude reference="1397"/>
                                 <exclude reference="2401"/>
                                 <exclude reference="2834"/>
                                 <exclude reference="27301"/>
                                 <exclude reference="34672"/>
                                 <exclude reference="15354"/>
+                                <exclude reference="929"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -132,13 +132,13 @@
                                 <include reference="452"/>
                                 <include reference="453"/>
                                 <include reference="702"/>
-                                <include reference="929"/>
                                 <include reference="1397"/>
                                 <include reference="2401"/>
                                 <include reference="2834"/>
                                 <include reference="27301"/>
                                 <include reference="34672"/>
                                 <include reference="15354"/>
+                                <include reference="929"/>
                             </mask>
                         </variation>
                     </view>
