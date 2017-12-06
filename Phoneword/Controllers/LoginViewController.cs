@@ -1,4 +1,4 @@
-﻿using Foundation;
+using Foundation;
 using System;
 using UIKit;
 using Phoneword.Models;
@@ -18,7 +18,7 @@ namespace Phoneword
 {
     public partial class LoginViewController : UIViewController
     {
-        private List<Kpi> neededKpi;            //List of dealer's worst KPI
+        //private List<Kpi> neededKpi;            //List of dealer's worst KPI
         private UIView activeview;             // Controller that activates the keyboard
         private System.nfloat scroll_amount = 0.0f; //Amount of screen that will scroll
         private System.nfloat bottom = 0.0f;    //Button point of the screen
@@ -26,50 +26,60 @@ namespace Phoneword
         private float offset = 10.0f;          // Extra offset
         private bool moveViewUp = false;           //Whether the view moves up (depends on keyboard)
 
+        UIScrollView scrollView;
+
+
         public LoginViewController(IntPtr handle) : base(handle)
         {}
 
         private VDAGateway vdaGateway;
-
         LoadingOverlay loader;
 
 
+        //Keyboard
+
         private void KeyBoardUpNotification(NSNotification notification)
         {//Moves the screen up, when the keyboard shows
-            
-            //Getting the keyboards size
-            var val = (NSValue)notification.UserInfo.ValueForKey(UIKeyboard.FrameEndUserInfoKey);
-            CGRect r = val.CGRectValue;
+            //if(!moveViewUp) 
+            //{
+                //Getting the keyboards size
+                var val = (NSValue)notification.UserInfo.ValueForKey(UIKeyboard.FrameEndUserInfoKey);
+                CGRect r = val.CGRectValue;
 
             // Find what view opened the keyboard
-            foreach (UIView view in this.View.Subviews)
-            {
-                if (view.IsFirstResponder)
-                    activeview = view;
-            }
+            //this.View.Subviews
+                foreach (UIView view in this.View.Subviews)
+                {
+                    if (view.IsFirstResponder)
+                        activeview = view;
+                }
 
-            // Bottom of the controller = initial position + height + offset      
-            bottom = (activeview.Frame.Y + activeview.Frame.Height + offset);
+                // Bottom of the controller = initial position + height + offset      
+                bottom = (activeview.Frame.Y + activeview.Frame.Height + offset);
 
-            // Calculate how far we need to scroll
-            scroll_amount = (r.Height - (View.Frame.Size.Height - bottom));
+                // Calculate how far we need to scroll
+                scroll_amount = (r.Height - (View.Frame.Size.Height - bottom));
 
-            // Perform the scrolling
-            if (scroll_amount > 0)
-            {
-                moveViewUp = true;
-                ScrollTheView(moveViewUp);
-            }
-            else
-            {
-                moveViewUp = false;
-            }
-
+                // Perform the scrolling
+                if (scroll_amount > 0)
+                {
+                    moveViewUp = true;
+                    ScrollTheView(moveViewUp);
+                }
+                else
+                {
+                    moveViewUp = false;
+                }
+            //}
         }
 
         private void KeyBoardDownNotification(NSNotification notification)
         {//Moves screen down when keyboard is dismissed
-            if (moveViewUp) { ScrollTheView(false); }
+            if (moveViewUp) 
+            { 
+                ScrollTheView(false); 
+            }
+            //this.ResignFirstResponder();
         }
 
 
@@ -83,22 +93,40 @@ namespace Phoneword
 
             if (move)
             {
-                frame.Y -= scroll_amount;
+                //frame.Y -= scroll_amount;
+                frame.Y = -100.0f;
             }
+
             else
             {
-                frame.Y += scroll_amount;
+                //frame.Y += scroll_amount; //+ 500.0f;
+                frame.Y = 0.0f;
                 scroll_amount = 0;
             }
 
             View.Frame = frame;
             UIView.CommitAnimations();
+            //this.ResignFirstResponder();
         }
+
+        
 
         public override void ViewDidLoad()
         {
+            base.ViewDidLoad();
 
-            //Maybe remove the username textfields
+            /*scrollView = new UIScrollView(
+                new CGRect(0, 0, View.Frame.Width +500, View.Frame.Height+ 500));
+
+            scrollView.AddSubview(this.View);
+            */
+
+            //View.AddSubview(scrollView);
+
+            //scrollView.ContentSize = ;
+            //CoreGraphics.CGSize(500);
+
+
 
             //While working in UsernameTextfield, remove keyboard by clicking return
             this.UsernameTextfield.ShouldReturn += (textField) => {
@@ -112,9 +140,23 @@ namespace Phoneword
                 return true;
             };
 
+            //UsernameTextfield.SecureTextEntry = true; //Extra movement for some reason
+            //PasswordTextfield.SecureTextEntry = false;
+
+
+            //UsernameTextfield.SecureTextEntry = false;
+            // UsernameTextfield.TextContentType = UITextContentType;
+
+            //PasswordTextfield.TextContentType = !PasswordTextfield.TextContentType;
+                //UITextContentType;
+
+            PasswordTextfield.SecureTextEntry = true;
+            //PasswordTextfield.TextContentType = UITextContentType("");
+
+
             //Keyboard dismissed on clicking anywhere outside
             var g = new UITapGestureRecognizer(() => View.EndEditing(true));
-            g.CancelsTouchesInView = false;
+            g.CancelsTouchesInView = true;
             View.AddGestureRecognizer(g); //Add the tapping gesture to view
 
 
@@ -136,7 +178,7 @@ namespace Phoneword
         {
             var bounds = UIScreen.MainScreen.Bounds;
 
-            loader = new LoadingOverlay(bounds);
+            loader = new LoadingOverlay(bounds, "Checking credentials...");
             View.Add(loader);
 
 
@@ -152,14 +194,20 @@ namespace Phoneword
                 string username = UsernameTextfield.Text;
                 string password = PasswordTextfield.Text;
 
+                //string password = UsernameTextfield.Text; //Reverse to fix movement issue
+                //string username = PasswordTextfield.Text;
                 Task<HttpResponseMessage> TaskResponse = vdaGateway.VerifyLogin(username, password);
 
                 var response = await TaskResponse as HttpResponseMessage;
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    new UIAlertView("Invalid Credentials", "Invalid Username or Password, please enter valid credentials", null, "OK", null).Show();
+                    //Alert for Invalid Credentials
+                    var invalidcontroller = UIAlertController.Create("Invalid Credentails", "Please enter a valid Username and/or Password", UIAlertControllerStyle.Alert);
+                    invalidcontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(invalidcontroller, true, null);
                 }
+
                 else
                 {
                     string json_string = await response.Content.ReadAsStringAsync();
@@ -167,14 +215,15 @@ namespace Phoneword
 
                     if (verifiedLogin == null)
                     {
-                        new UIAlertView("Server Error", "Server response unable to be read", null, "OK", null).Show();
+                        //Alert for Server Error
+                        var errorcontroller = UIAlertController.Create("Server Error", "Server response unable to read, please try again later", UIAlertControllerStyle.Alert);
+                        errorcontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                        PresentViewController(errorcontroller, true, null);
                     }
 
                     else
                     {
-                        //new UIAlertView("Welcome " + dealer_name," I am your Virtual Dealership Adviser", null, "OK", null).Show();
                         viewcontroller.login_info = verifiedLogin; //Pass dealer's name to next view
-                        
                         this.NavigationController.PushViewController(viewcontroller, true); //This code changes the view
                     }
                 }

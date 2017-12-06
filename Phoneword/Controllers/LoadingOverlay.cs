@@ -12,10 +12,12 @@ namespace Phoneword
     {
         UIActivityIndicatorView activitySpinner;
         UILabel loadingLabel;
+        string _display;
 
-        public LoadingOverlay(CGRect bounds) : base(bounds)
+        public LoadingOverlay(CGRect bounds, string display) : base(bounds)
         {
             Initialize();
+            _display = display;
         }
 
         void Initialize()
@@ -52,7 +54,7 @@ namespace Phoneword
                 ));
             loadingLabel.BackgroundColor = UIColor.Clear;
             loadingLabel.TextColor = UIColor.White;
-            loadingLabel.Text = "Checking credentials...";
+            loadingLabel.Text = "Loading...";
             loadingLabel.TextAlignment = UITextAlignment.Center;
             loadingLabel.AutoresizingMask = UIViewAutoresizing.All;
             AddSubview(loadingLabel);

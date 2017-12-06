@@ -4,6 +4,7 @@ using System.Text;
 using Foundation;
 using UIKit;
 using System.Linq;
+using CoreGraphics;
 
 namespace Phoneword.Models
 {
@@ -12,7 +13,7 @@ namespace Phoneword.Models
         public delegate void NewPageHandler(object sender, EventArgs e);
         public event NewPageHandler NewPageEvent;
 
-        private List<Kpi> tableItems;
+        //private List<Kpi> tableItems;
         private string cellIdentifier = "TableCell";
         Dictionary<string, List<Kpi>> indexedTableItems = new Dictionary<string,List<Kpi>>();
 
@@ -51,9 +52,50 @@ namespace Phoneword.Models
             return indexedTableItems[keys[section]].Count;
         }
 
-        public override string TitleForHeader(UITableView tableView, nint section)
+        /*public override string TitleForHeader(UITableView tableView, nint section)
         {
             return keys[section];
+        }*/
+
+        public override UIView GetViewForHeader(UITableView tableView, nint section)
+        {
+
+            UILabel headerLabel = new UILabel();
+
+            string headerText = "";
+
+            if (section == 0)
+            {
+                headerText = "Here Is What I Found To Be The Most Related To Your Question: "; //using 20 font for this
+            }
+            else
+            {
+
+                headerText = "Look Below To See Your Most Needed Areas Of Improvement: ";
+
+            }
+
+
+            //headerLabel.Text = keys[section];
+
+            headerLabel.Text = headerText;
+
+            headerLabel.Font = UIFont.FromName("HelveticaNeue-Bold", 20);
+
+            headerLabel.BackgroundColor = UIColor.White;
+
+            headerLabel.TextColor = UIColor.Black;
+
+            /*headerLabel.ShadowOffset = new CoreGraphics.CGSize(10, 10);
+            //headerLabel.ShadowOpacity = 2f;
+            headerLabel.ShadowColor = UIColor.Black;*/
+
+            headerLabel.LineBreakMode = UILineBreakMode.WordWrap;
+            headerLabel.TextAlignment = UITextAlignment.Center;
+            headerLabel.Lines = 0;
+
+            return headerLabel;
+
         }
 
         //Shortcut could ge here butnot needed
@@ -65,29 +107,41 @@ namespace Phoneword.Models
                 cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
             }
 
-            //Attributes for action title string
-            var KpiTextattributes = new UIStringAttributes
-            {
-                ForegroundColor = UIColor.Red,
-                Font = UIFont.FromName("Courier-Bold", 24), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
+            //cell.SelectionStyle = UITableViewCellSelectionStyle.None;
 
-               // UnderlineColor = UIColor.Green,
-               // UnderlineStyle = NSUnderlineStyle.Single
+            //Sets background color to blue upon selection
+            /*UIView MyView = new UIView();
+            MyView.BackgroundColor = UIColor.FromRGB(61, 131, 244);
+            cell.SelectedBackgroundView = MyView;*/
+
+           /* var myView = new UIView(new CGRect(0, 0, 5, cell.Bounds.Height *5));
+            myView.BackgroundColor = UIColor.Black;
+            cell.AddSubview(myView);*/
+
+
+            //Attributes for action title string
+            var vehicleTextattributes = new UIStringAttributes
+            {
+                ForegroundColor = UIColor.FromRGB(179,149,86), //Bronze Text Color
+                Font = UIFont.FromName("HelveticaNeue-Bold", 20), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
+
+                UnderlineColor = UIColor.FromRGB(179,149,86),
+               UnderlineStyle = NSUnderlineStyle.Single
             };
 
-            var segmentTextattributes = new UIStringAttributes
+            var percentileTextattributes = new UIStringAttributes
             {
                 ForegroundColor = UIColor.Black,
-                Font = UIFont.FromName("Courier-Bold", 20), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
+                Font = UIFont.FromName("HelveticaNeue-Bold", 20), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
 
                 // UnderlineColor = UIColor.Green,
                 // UnderlineStyle = NSUnderlineStyle.Single
             };
 
-            var valueTextattributes = new UIStringAttributes
+            var performanceTextattributes = new UIStringAttributes
             {
                 ForegroundColor = UIColor.Black,
-                Font = UIFont.FromName("Courier-Bold", 20), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
+                Font = UIFont.FromName("HelveticaNeue-Bold", 20), //All available fonts https://developer.xamarin.com/recipes/ios/standard_controls/fonts/enumerate_fonts/
 
                 // UnderlineColor = UIColor.Green,
                 // UnderlineStyle = NSUnderlineStyle.Single
@@ -95,73 +149,118 @@ namespace Phoneword.Models
 
             if (indexedTableItems[keys[indexPath.Section]][indexPath.Row] != null)
             {
-                if(indexPath.Row == 0)
+                /*if(indexPath.Section == 0)
                 {
-                    //cell
+                    cell.BackgroundColor = UIColor.FromRGB(112,200,47); // Urban Science Color
                 }
 
-                if (indexPath.Row % 2 == 1)
+                if (indexPath.Section == 1)
                 {
-                    //urban science color
-                    cell.BackgroundColor = UIColor.FromRGB(117, 190, 66);
+                    if (indexPath.Row % 2 == 1)
+                    {
+                        
+                        //cell.BackgroundColor = UIColor.FromRGB(176, 225, 141); //Lighter Urban Science Color
+                        cell.BackgroundColor = UIColor.FromRGB(219, 241, 203); //Lightest Urban Science
+                    }
+                    else
+                    {
+                        
+                        cell.BackgroundColor = UIColor.FromRGB(220, 220, 220); //darker gray
+                    }
                 }
-                else
-                {
-                    //lighter color
-                    cell.BackgroundColor = UIColor.FromRGB(204, 255, 153);
-                }
+
+
                 cell.TextLabel.Lines = 0;
                 cell.TextLabel.LineBreakMode = UILineBreakMode.WordWrap;
                 cell.TextLabel.TextAlignment = UITextAlignment.Center;
 
                 cell.Layer.ShadowOffset = new CoreGraphics.CGSize(3, 3);
                 cell.Layer.ShadowOpacity = 2f;
-                cell.Layer.ShadowColor = UIColor.Black.CGColor;
+                cell.Layer.ShadowColor = UIColor.Black.CGColor;*/
+
+
+                //Making view for card view appearance
+
+                // 350 is the width                 // UILabel myLabel = new UILabel(new CGRect(minX + 12, minY + 10, 350, 120));                 UILabel myLabel = new UILabel(new CGRect(12,12, 350, 120));                   myLabel.BackgroundColor = UIColor.White;                 //myLabel.Sha                  //Make view for Selection of cell                  UIView MyView = new UIView();                 MyView.BackgroundColor = UIColor.White;//UIColor.FromWhiteAlpha(1.0f, 1.0f);                 myLabel.AddSubview(MyView);                 cell.SelectedBackgroundView = MyView;                  //Selection style                 //cell.SelectionStyle = UITableViewCellSelectionStyle.None;                   myLabel.Layer.BorderWidth = 0.8f;
+
+                //Bronze border color
+                myLabel.Layer.BorderColor = UIColor.FromRGB(179,149,86).CGColor;                 myLabel.Layer.CornerRadius = 4.0f;                  myLabel.Layer.MasksToBounds = false;                 //myLabel.Layer.MasksToBounds = true;                  //var shadowPath = UIBezierPath.FromRoundedRect(new CGRect(0.0f, 0.0f, 200.0f, 100.0f), 50.0f);                  //Color for shadow                 myLabel.Layer.ShadowColor = UIColor.Black.CGColor;                  //Set offset for shadow                 myLabel.Layer.ShadowOffset = new CoreGraphics.CGSize(0, 0); //Width and height                  //myLabel.MasksToBound                  myLabel.Layer.ShadowOpacity = 0.1f;                 //myLabel.ShadowOffset = new CoreGraphics.CGSize(10, 10);                 // myLabel.ShadowColor = null;                 //myLabel.Layer.ShadowPath = shadowPath.CGPath;                  //Sets the shadow upon selection, sets the inside of cell to shadowcolor                 UIBezierPath shadowPath = UIBezierPath.FromRoundedRect(myLabel.Bounds, 4.0f); //Bounds, cornerRadius                 myLabel.Layer.ShadowPath = shadowPath.CGPath;                  myLabel.Lines = 0;                 myLabel.LineBreakMode = UILineBreakMode.WordWrap;                 myLabel.TextAlignment = UITextAlignment.Center;                 // myLabel.Text = tableItems[0].actionP;                  //myView.Layer.CornerRadius = 4;                 //cell.ContentView.AddSubview(myView);                  //myLabel.Frame = CoreGraphics.CGRectEdge(myView.Bounds, 8, 8);                  cell.ContentView.AddSubview(myLabel);                   //Can apply other attributes to the rest of the text                 //myLabel.AttributedText = prettyString;
+
+
+                //Code ends here
 
                 Kpi curKpi = indexedTableItems[keys[indexPath.Section]][indexPath.Row];// tableItems[indexPath.Row];
 
-                var kpiString = "KPI: " + curKpi.name + " \n";
-                var segmentString = "Segment: " + curKpi.segment + " \n";
-                var valueString = string.Format("Value: {0:0.0%} ", curKpi.p_val);
+                var vehicleString = curKpi.brand + " " + curKpi.model + " " + curKpi.name + "\n" + "\n";
+                var percentileString = string.Format("Percentile: {0:0.0%} ",curKpi.p_val) + "\n" + "\n";
 
-                var prettyString1 = new NSMutableAttributedString(kpiString);
-                var prettyString2 = new NSMutableAttributedString(segmentString);
-                var brandString = new NSMutableAttributedString("Brand: " + curKpi.brand + " \n");
-                var modelString = new NSMutableAttributedString("Model: " + curKpi.model + " \n");
-                var prettyString3 = new NSMutableAttributedString(valueString);
+                var performanceString = "Nothing"; //Good, Bad, or Fair
+                if (curKpi.p_val >= .50) //under .2 is red
+                {
+                    performanceString = "Good \n " ;
+                    //valueTextattributes.ForegroundColor = UIColor.FromRGB(34, 98, 6); //Dark Green
+                                                                                      // prettyString.AddAttribute(NSString ForegrounColor = UIColor.Red,)
+                }
+                else if ((curKpi.p_val >= .30) && curKpi.p_val < .50)
+                {
+                    performanceString = "Fair \n ";
+                    //valueTextattributes.ForegroundColor = UIColor.Yellow;//UIColor.FromRGB(196,165,9); //Orange
+                }
+                else if (curKpi.p_val < .20)
+                {
+                    performanceString = "Bad \n ";
+                    //valueTextattributes.ForegroundColor = UIColor.FromRGB(183, 17, 17); //Dark Red
+                }
+
+                //var kpiString = "KPI: " + curKpi.name + " \n";
+                //var segmentString = "Segment: " + curKpi.segment + " \n";
+                //var valueString = string.Format("Value: {0:0.0%} ", curKpi.p_val);
+
+                var prettyString1 = new NSMutableAttributedString(vehicleString);
+                var prettyString2 = new NSMutableAttributedString(percentileString);
+                //var brandString = new NSMutableAttributedString("Brand: " + curKpi.brand + " \n");
+                //var modelString = new NSMutableAttributedString("Model: " + curKpi.model + " \n");
+                var prettyString3 = new NSMutableAttributedString(performanceString);
 
                 //Should also try making a blank UIView and try setting background color
                 if (curKpi.p_val >= .50) //under .2 is red
                 {
-                    KpiTextattributes.ForegroundColor = UIColor.FromRGB(34,98,6); //Dark Green
+                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(34,98,6); //Dark Green
                    // prettyString.AddAttribute(NSString ForegrounColor = UIColor.Red,)
                 }else if((curKpi.p_val >= .30) && curKpi.p_val < .50)
                 {
-                    KpiTextattributes.ForegroundColor = UIColor.FromRGB(246,133,21); //Orange
+                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(239,208,52); //Darker Yellow
                 }else if (curKpi.p_val < .20)
                 {
-                    KpiTextattributes.ForegroundColor = UIColor.FromRGB(183,17,17); //Dark Red
+                    performanceTextattributes.ForegroundColor = UIColor.FromRGB(183,17,17); //Dark Red
                 }
 
                 //Set attribute to the text
                 // prettyString.SetAttributes(KpiTextattributes.Dictionary, new NSRange(0, 4));
 
-                prettyString1.SetAttributes(KpiTextattributes.Dictionary, new NSRange(0, 4));
-                prettyString2.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 8));
-                brandString.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 6));
-                modelString.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 6));
-                prettyString3.SetAttributes(valueTextattributes.Dictionary, new NSRange(0, 6));
+                var length1 = vehicleString.Length;
+                var length2 = percentileString.Length;
+                var length3 = performanceString.Length;
+
+                prettyString1.SetAttributes(vehicleTextattributes.Dictionary, new NSRange(0, length1)); //try (lengt)
+                prettyString2.SetAttributes(percentileTextattributes.Dictionary, new NSRange(0, length2)); //try (length1+1, length2?)
+                //brandString.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 6));
+                //modelString.SetAttributes(segmentTextattributes.Dictionary, new NSRange(0, 6));
+                prettyString3.SetAttributes(performanceTextattributes.Dictionary, new NSRange(0, length3));
 
 
                 var prettyString = new NSMutableAttributedString() ;
                 prettyString.Append(prettyString1);
                 prettyString.Append(prettyString2);
-                prettyString.Append(brandString);
-                prettyString.Append(modelString);
+                //prettyString.Append(brandString);
+                //prettyString.Append(modelString);
                 prettyString.Append(prettyString3);
 
                 //Can apply other attributes to the rest of the text
-                cell.TextLabel.AttributedText = prettyString;
+                //cell.TextLabel.AttributedText = prettyString;
+                myLabel.AttributedText = prettyString;
+
+
 
                // Kpi curKpi = tableItems[indexPath.Row];
                // cell.TextLabel.Text = $"{curKpi.name}: {curKpi.segment}, {string.Format("{0:0.0%}", curKpi.p_val)}";
@@ -175,6 +274,22 @@ namespace Phoneword.Models
             //If table scrows out of view, a cell is unseable then cell returned as recycled cell.
             //No need for reloading etc.
         }
+
+        //Returns the height of the tablve view cell
+        public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
+        {
+            //return base.GetHeightForRow(tableView, indexPath);
+            return 146;
+        }
+
+        /*[Foundation.Export("prepareForReuse")]
+        public virtual void PrepareForReuse(){
+            
+        }*/
+
+       /* public override void PrepareForReuse(){
+            
+        }*/
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {

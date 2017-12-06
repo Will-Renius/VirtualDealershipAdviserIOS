@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using UIKit;
 
@@ -27,6 +27,8 @@ namespace Phoneword
     {
         public VerifyLogin login_info;
 
+        private LoadingOverlay loader;
+
         private SFSpeechAudioBufferRecognitionRequest recognitionRequest;
         private SFSpeechRecognitionTask recognitionTask;
         private AVAudioEngine audioEngine = new AVAudioEngine();
@@ -46,7 +48,12 @@ namespace Phoneword
 
         string final_query;
 
+<<<<<<< HEAD
         private LoadingOverlay loader;
+=======
+        NSObject keyboardup;
+        NSObject keyboarddown;
+>>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
 
 
         public MainViewController(IntPtr handle) : base(handle)
@@ -67,8 +74,17 @@ namespace Phoneword
                     activeview = view;
             }
 
-            // Bottom of the controller = initial position + height + offset      
-            bottom = (activeview.Frame.Y + activeview.Frame.Height + offset);
+            // Bottom of the controller = initial position + height + offset 
+            //
+            if (activeview == null)
+            {
+                bottom = offset;
+            }
+
+            else
+            {
+                bottom = (activeview.Frame.Y + activeview.Frame.Height + offset);
+            }
 
             // Calculate how far we need to scroll
             scroll_amount = (r.Height - (View.Frame.Size.Height - bottom));
@@ -156,18 +172,35 @@ namespace Phoneword
                 else
                 {
                     StartRecording();
+                    resetTexts();
                     YouAskedLabel.Text = "Listening...";
                     SpeakerButton.Highlighted = true;
                 }
             };
         }
 
+        private void resetTexts(){
+            Querybox.Text = "";
+            YouAskedLabel.Text = "";
+            final_query = "";
+            Querybox.Placeholder = "Your question...";
+        }
+
         public override void ViewDidLoad()
         {
+            //Welcome alert
+            var welcomecontroller = UIAlertController.Create("Welcome", "I am your Virtual Dealership Adviser", UIAlertControllerStyle.Alert);
+            welcomecontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+            PresentViewController(welcomecontroller, true, null);
+
+
             vdaGateway = new VDAGateway();
-            final_query = "";
+
+            resetTexts();
+
+            //Create a tap gesture for movign the keyboard when touching outside of it
             var g = new UITapGestureRecognizer(() => View.EndEditing(true));
-            g.CancelsTouchesInView = false; //for iOS5
+            g.CancelsTouchesInView = true; //for iOS5
             
             View.AddGestureRecognizer(g);
 
@@ -177,17 +210,21 @@ namespace Phoneword
             // Keyboard Down
             NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillHideNotification, KeyBoardDownNotification);
 
+
+
+
+
+
             base.ViewDidLoad();
 
             DealershipNameLabel.Text = login_info.dealer_name;
             DealershipNameLabel.LineBreakMode = UILineBreakMode.WordWrap;
             
 
-            Querybox.Text = "";
             Querybox.Placeholder = "Your question...";
 
+
             YouAskedLabel.TextAlignment = UITextAlignment.Center;
-            YouAskedLabel.Text = "";
             YouAskedLabel.LineBreakMode = UILineBreakMode.WordWrap;
 
             initSpeakerButton();
@@ -210,10 +247,7 @@ namespace Phoneword
 
         partial void HomeDeleteButton_TouchUpInside(UIButton sender)
         {
-            Querybox.Text = "";
-            Querybox.Placeholder = "Your question:";
-
-            YouAskedLabel.Text = "";
+            resetTexts();
         }
 
 
@@ -222,7 +256,11 @@ namespace Phoneword
         {
             var bounds = UIScreen.MainScreen.Bounds;
 
+<<<<<<< HEAD
             loader = new LoadingOverlay(bounds);
+=======
+            loader = new LoadingOverlay(bounds, "Processing query...");
+>>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
             View.Add(loader);
 
             HomeSubmitButton.Enabled = false;
@@ -230,13 +268,13 @@ namespace Phoneword
             var kpiViewController = Storyboard.InstantiateViewController("KpiViewController") as KPIViewController;
             var MySender = sender as KPITableModel;
 
-            //we gotta reset our list variables
+            //Resets our list variables
             kpiViewController.neededKpi = new List<Kpi>();
             neededKpi = new List<Kpi>();
             
             relatedKpi = new Kpi();
 
-            //grabbing related kpi
+            //Recieve related kpi
             if (string.IsNullOrEmpty(final_query))
             {
                 if (!string.IsNullOrEmpty(Querybox.Text))
@@ -245,11 +283,19 @@ namespace Phoneword
                 }
                 else
                 {
-                    new UIAlertView("Error", "Entry required", null, "OK", null).Show();
+                    //Error Alert
+                    var errorcontroller = UIAlertController.Create("Error", "Entry required", UIAlertControllerStyle.ActionSheet);
+                    errorcontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(errorcontroller, true, null); //Display action
+
+                    //new UIAlertView("Error", "Entry required", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
                     loader.Hide();
+<<<<<<< HEAD
                     YouAskedLabel = ""
                     final_query = "";
+=======
+>>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
             }
@@ -260,15 +306,30 @@ namespace Phoneword
                 {
                     if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
                     {
-                        new UIAlertView("Error", "Chat bot service could not identify relevant KPI for your query", null, "OK", null).Show();
+                        //Error Alert
+                        var response1controller = UIAlertController.Create("Server Error", "Chat bot service could not identify relevant KPI for your query", UIAlertControllerStyle.ActionSheet);
+                        response1controller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                        PresentViewController(response1controller, true, null); //Display action
+
+                        //new UIAlertView("Error", "Chat bot service could not identify relevant KPI for your query", null, "OK", null).Show();
                     }
                     else
                     {
-                        new UIAlertView("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
+                        //Error Alert
+                        var response2controller = UIAlertController.Create("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), UIAlertControllerStyle.ActionSheet);
+                        response2controller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                        PresentViewController(response2controller, true, null); //Display action
+
+                        //new UIAlertView("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
                     }
                     HomeSubmitButton.Enabled = true;
+<<<<<<< HEAD
                     loader.Hide();
                     final_query = "";
+=======
+                    resetTexts();
+                    loader.Hide();
+>>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
 
@@ -277,10 +338,20 @@ namespace Phoneword
 
                 if (relatedKpi == null)
                 {
-                    new UIAlertView("Server Error", $"Server returned incompatable model for relvant kpis", null, "OK", null).Show();
+                    //Error Alert
+                    var relatedkpicontroller = UIAlertController.Create("Server Error", "Server returned incompatable model for relevant KPIs", UIAlertControllerStyle.ActionSheet);
+                    relatedkpicontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(relatedkpicontroller, true, null); //Display action
+
+                    //new UIAlertView("Server Error", $"Server returned incompatable model for relvant kpis", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
+<<<<<<< HEAD
                     loader.Hide();
                     final_query = "";
+=======
+                    resetTexts();
+                    loader.Hide();
+>>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
 
@@ -291,10 +362,20 @@ namespace Phoneword
             {
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    new UIAlertView("Server Error", "Server status for retrieving your needed KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
+                    //Similar to above//////////////////////////////////////////////////////////////////////but want to be cautious of asyncs
+                    var response2controller = UIAlertController.Create("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), UIAlertControllerStyle.ActionSheet);
+                    response2controller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(response2controller, true, null); //Display action
+
+                    //new UIAlertView("Server Error", "Server status for retrieving your needed KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
+<<<<<<< HEAD
                     loader.Hide();
                     final_query = "";
+=======
+                    resetTexts();
+                    loader.Hide();
+>>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
 
@@ -303,10 +384,20 @@ namespace Phoneword
 
                 if (neededKpi == null)
                 {
-                    new UIAlertView("Server Error", $"Server returned incompatable model for needed kpis", null, "OK", null).Show();
+                    //Similar to above//////////////////////////////////////////////////////////////////////but want to be cautious of asyncs
+                    var relatedkpicontroller = UIAlertController.Create("Server Error", "Server returned incompatable model for relevant KPIs", UIAlertControllerStyle.ActionSheet);
+                    relatedkpicontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(relatedkpicontroller, true, null); //Display action
+
+                    //new UIAlertView("Server Error", $"Server returned incompatable model for needed kpis", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
+<<<<<<< HEAD
                     loader.Hide();
                     final_query = "";
+=======
+                    resetTexts();
+                    loader.Hide();
+>>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
 
@@ -314,8 +405,13 @@ namespace Phoneword
             }
             this.NavigationController.PushViewController(kpiViewController, true); //This code changes the view     
             HomeSubmitButton.Enabled = true;
+<<<<<<< HEAD
             loader.Hide();
             final_query = "";
+=======
+            resetTexts();
+            loader.Hide();
+>>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
         }
 
         // ============== Speech Recognition Functions ============
@@ -357,7 +453,5 @@ namespace Phoneword
             audioEngine.Stop();
             recognitionRequest.EndAudio();
         }
-
-
     }
 }

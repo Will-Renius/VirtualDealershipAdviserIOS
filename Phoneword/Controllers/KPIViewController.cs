@@ -25,10 +25,12 @@ namespace Phoneword
 
         //This will be set when we hit the API
         private List<KpiAction> actions;
+
         //Container to store our KPIs in the list view
-        private List<Kpi> RNKpi { get; set; } //Related and Needed
-        private UITableView _table;
-        private KPITableModel TableSource;
+        private List<Kpi> RNKpi { get; set; } //Related and Needed kpis combined
+
+        private UITableView _table; //Table like view for this controller
+        private KPITableModel TableSource; //Assist in table view
 
         private VDAGateway VDAGateway;
 
@@ -60,7 +62,7 @@ namespace Phoneword
             _table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
             //Set background color for the whole table
-            _table.BackgroundColor = UIColor.FromRGB(204, 255, 153);
+            _table.BackgroundColor = UIColor.White;
             View.AddSubview(_table);
 
             TableSource.NewPageEvent += KpiSelected;
@@ -85,7 +87,12 @@ namespace Phoneword
 
                 if (string.IsNullOrEmpty(selectedKpi.name))
                 {
-                    new UIAlertView("Selection Error", "Please select a KPI", null, "OK", null).Show();
+                    //Error Alert
+                    var selectioncontroller = UIAlertController.Create("Selection Error", "Please select a KPI", UIAlertControllerStyle.Alert);
+                    selectioncontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(selectioncontroller, true, null);
+
+                    //new UIAlertView("Selection Error", "Please select a KPI", null, "OK", null).Show();
                     return;
                 }
 
@@ -94,7 +101,12 @@ namespace Phoneword
                 //if we still have internal server error
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    new UIAlertView("API Error", $"Server under maintenance, please try again later", null, "OK", null).Show();
+                    //Error Alert
+                    var apicontroller = UIAlertController.Create("API Error", "Server under maintenance, please try again later", UIAlertControllerStyle.Alert);
+                    apicontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(apicontroller, true, null);
+
+                    //new UIAlertView("API Error", $"Server under maintenance, please try again later", null, "OK", null).Show();
                     return;
                 }
 
@@ -103,7 +115,12 @@ namespace Phoneword
 
                 if (actions == null)
                 {
-                    new UIAlertView("Deserialization Error", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
+                    //Error Alert
+                    var deserializationcontroller = UIAlertController.Create("Deserialization Error",$"JSON Returned: \"{json_string}\"", UIAlertControllerStyle.Alert);
+                    deserializationcontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(deserializationcontroller, true, null);
+
+                    //new UIAlertView("Deserialization Error", $"JSON Returned: \"{json_string}\"", null, "OK", null).Show();
                     return;
                 }
 

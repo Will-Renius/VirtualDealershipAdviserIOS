@@ -2,14 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDisplayName</key>
-	<string>Virtual Dealership Adviser</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.companyname.Phoneword</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
@@ -29,12 +25,17 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Allows you to provide VDA speech input</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allows you to provide VDA speech input</string>
+	<key>CFBundleName</key>
+	<string>Virtual Dealership Adviser</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.fall2017urbanscience.app</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
 </dict>
 </plist>
