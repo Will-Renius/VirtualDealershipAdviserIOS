@@ -45,21 +45,12 @@ namespace Phoneword
         private float offset = 10.0f;          // Extra offset
         private bool moveViewUp = false;           //Whether the view moves up (depends on keyboard)
 
-<<<<<<< HEAD
-        private VDAGateway vdaGateway;
 
-        string final_query;
-
-<<<<<<< HEAD
-        private LoadingOverlay loader;
-=======
         NSObject keyboardup;
         NSObject keyboarddown;
->>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
-=======
+
         private VDAGateway vdaGateway; //Variables for transitioning to different view
         string final_query; //Query passed to Microsoft LUIS
->>>>>>> 0b0da14... Comments Added to iOS
 
 
         public MainViewController(IntPtr handle) : base(handle)
@@ -255,11 +246,7 @@ namespace Phoneword
         {
             var bounds = UIScreen.MainScreen.Bounds;
 
-<<<<<<< HEAD
-            loader = new LoadingOverlay(bounds);
-=======
             loader = new LoadingOverlay(bounds, "Processing query...");
->>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
             View.Add(loader);
 
             HomeSubmitButton.Enabled = false;
@@ -290,11 +277,8 @@ namespace Phoneword
                     //new UIAlertView("Error", "Entry required", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
                     loader.Hide();
-<<<<<<< HEAD
-                    YouAskedLabel = ""
+                    YouAskedLabel.Text = "";
                     final_query = "";
-=======
->>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
             }
@@ -320,13 +304,10 @@ namespace Phoneword
 
                     }
                     HomeSubmitButton.Enabled = true;
-<<<<<<< HEAD
                     loader.Hide();
                     final_query = "";
-=======
                     resetTexts();
                     loader.Hide();
->>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
 
@@ -341,13 +322,10 @@ namespace Phoneword
                     PresentViewController(relatedkpicontroller, true, null); //Display action
 
                     HomeSubmitButton.Enabled = true;
-<<<<<<< HEAD
                     loader.Hide();
                     final_query = "";
-=======
                     resetTexts();
                     loader.Hide();
->>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
 
@@ -364,13 +342,9 @@ namespace Phoneword
                     PresentViewController(response2controller, true, null); //Display action
 
                     HomeSubmitButton.Enabled = true;
-<<<<<<< HEAD
                     loader.Hide();
                     final_query = "";
-=======
                     resetTexts();
-                    loader.Hide();
->>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
 
@@ -385,13 +359,9 @@ namespace Phoneword
                     PresentViewController(relatedkpicontroller, true, null); //Display action
 
                     HomeSubmitButton.Enabled = true;
-<<<<<<< HEAD
-                    loader.Hide();
                     final_query = "";
-=======
                     resetTexts();
                     loader.Hide();
->>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
                     return;
                 }
 
@@ -399,13 +369,10 @@ namespace Phoneword
             }
             this.NavigationController.PushViewController(kpiViewController, true); //This code changes the view     
             HomeSubmitButton.Enabled = true;
-<<<<<<< HEAD
             loader.Hide();
             final_query = "";
-=======
             resetTexts();
             loader.Hide();
->>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
         }
 
         // ============== Speech Recognition Functions ============
