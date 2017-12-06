@@ -36,8 +36,6 @@ namespace Phoneword.Models
 
     public class VerifyLogin
     {
-        //will have to change accessor properties later when security matters
-        // probably will be weird converting json to model with private properties im guessing?
         public bool validUser { get; set; }
         public bool isAdmin { get; set; }
         public string username { get; set; }

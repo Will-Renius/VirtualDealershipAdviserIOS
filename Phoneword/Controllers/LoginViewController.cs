@@ -26,28 +26,24 @@ namespace Phoneword
         private float offset = 10.0f;          // Extra offset
         private bool moveViewUp = false;           //Whether the view moves up (depends on keyboard)
 
-        UIScrollView scrollView;
-
 
         public LoginViewController(IntPtr handle) : base(handle)
-        {}
+        {} //Constructor
 
-        private VDAGateway vdaGateway;
+        private VDAGateway vdaGateway; //Both member variables for transitioning to different view
         LoadingOverlay loader;
 
 
-        //Keyboard
+        //Code for moving the keyboard
+        //Depending on iPhone type and default keyboard of iPhone (iPhone security keyboard or other), results may vary.
 
         private void KeyBoardUpNotification(NSNotification notification)
-        {//Moves the screen up, when the keyboard shows
-            //if(!moveViewUp) 
-            //{
-                //Getting the keyboards size
+        {//Moves screen up when keyboard appears
+
                 var val = (NSValue)notification.UserInfo.ValueForKey(UIKeyboard.FrameEndUserInfoKey);
                 CGRect r = val.CGRectValue;
 
-            // Find what view opened the keyboard
-            //this.View.Subviews
+                //Find what view opened the keyboard and assign it to activeview
                 foreach (UIView view in this.View.Subviews)
                 {
                     if (view.IsFirstResponder)
@@ -70,7 +66,6 @@ namespace Phoneword
                 {
                     moveViewUp = false;
                 }
-            //}
         }
 
         private void KeyBoardDownNotification(NSNotification notification)
@@ -79,7 +74,6 @@ namespace Phoneword
             { 
                 ScrollTheView(false); 
             }
-            //this.ResignFirstResponder();
         }
 
 
@@ -93,20 +87,17 @@ namespace Phoneword
 
             if (move)
             {
-                //frame.Y -= scroll_amount;
-                frame.Y = -100.0f;
+                frame.Y = -100.0f; //Move view down
             }
 
             else
             {
-                //frame.Y += scroll_amount; //+ 500.0f;
-                frame.Y = 0.0f;
+                frame.Y = 0.0f; //Reset view back to original position
                 scroll_amount = 0;
             }
 
             View.Frame = frame;
             UIView.CommitAnimations();
-            //this.ResignFirstResponder();
         }
 
         
@@ -114,18 +105,6 @@ namespace Phoneword
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            /*scrollView = new UIScrollView(
-                new CGRect(0, 0, View.Frame.Width +500, View.Frame.Height+ 500));
-
-            scrollView.AddSubview(this.View);
-            */
-
-            //View.AddSubview(scrollView);
-
-            //scrollView.ContentSize = ;
-            //CoreGraphics.CGSize(500);
-
 
 
             //While working in UsernameTextfield, remove keyboard by clicking return
@@ -140,18 +119,8 @@ namespace Phoneword
                 return true;
             };
 
-            //UsernameTextfield.SecureTextEntry = true; //Extra movement for some reason
-            //PasswordTextfield.SecureTextEntry = false;
-
-
-            //UsernameTextfield.SecureTextEntry = false;
-            // UsernameTextfield.TextContentType = UITextContentType;
-
-            //PasswordTextfield.TextContentType = !PasswordTextfield.TextContentType;
-                //UITextContentType;
 
             PasswordTextfield.SecureTextEntry = true;
-            //PasswordTextfield.TextContentType = UITextContentType("");
 
 
             //Keyboard dismissed on clicking anywhere outside
@@ -167,7 +136,7 @@ namespace Phoneword
             // Keyboard Dismissed
             NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillHideNotification, KeyBoardDownNotification);
 
-            vdaGateway = new VDAGateway();
+            vdaGateway = new VDAGateway(); //Instance of transition between controller views
 
             LoginButton.TouchDown += LoginRequested;
 
@@ -175,14 +144,14 @@ namespace Phoneword
         }
 
         public async void LoginRequested(object sender, EventArgs e)
-        {
+        { //When login button is pressed enable alerts and transition to MainViewController if right conditions are met
             var bounds = UIScreen.MainScreen.Bounds;
 
             loader = new LoadingOverlay(bounds, "Checking credentials...");
             View.Add(loader);
 
 
-            LoginButton.Enabled = false;
+            LoginButton.Enabled = false; //Unable to click login button two times or more while loading
 
 
             MainViewController viewcontroller = Storyboard.InstantiateViewController("MainViewController") as MainViewController;
@@ -194,8 +163,6 @@ namespace Phoneword
                 string username = UsernameTextfield.Text;
                 string password = PasswordTextfield.Text;
 
-                //string password = UsernameTextfield.Text; //Reverse to fix movement issue
-                //string username = PasswordTextfield.Text;
                 Task<HttpResponseMessage> TaskResponse = vdaGateway.VerifyLogin(username, password);
 
                 var response = await TaskResponse as HttpResponseMessage;
@@ -230,7 +197,6 @@ namespace Phoneword
             }
             LoginButton.Enabled = true;
             loader.Hide();
-
         }
     }
 }

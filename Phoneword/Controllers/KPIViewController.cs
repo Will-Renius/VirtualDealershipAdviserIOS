@@ -32,11 +32,10 @@ namespace Phoneword
         private UITableView _table; //Table like view for this controller
         private KPITableModel TableSource; //Assist in table view
 
-        private VDAGateway VDAGateway;
+        private VDAGateway VDAGateway; //For transitioning between views
 
         public KPIViewController(IntPtr handle) : base(handle)
-        {
-        }
+        {} //Constructor
 
         public override void ViewDidLoad()
         {
@@ -48,9 +47,9 @@ namespace Phoneword
             if (neededKpi != null && relatedKpi != null)
             {
                 rnkpi = neededKpi; //Sets list to all the needkPIs
-                //rnkpi.Insert(0, relatedKpi); //inserts KPI related to the question on top
             }
 
+            //Initialize table view and its source
             TableSource = new KPITableModel(rnkpi,relatedKpi); //Passing in needed list and related kpi seperately
             _table = new UITableView
             {
@@ -72,8 +71,10 @@ namespace Phoneword
         {
             
             _table.UserInteractionEnabled = false;
+
+            //Transitioning to ActionsViewController
             ActionsViewController nextPage = this.Storyboard.InstantiateViewController("ActionsViewController") as ActionsViewController;
-            KPITableModel MySender = sender as KPITableModel;
+            KPITableModel MySender = sender as KPITableModel; 
 
             Kpi selectedKpi = MySender.getSelected();
 

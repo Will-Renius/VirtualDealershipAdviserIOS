@@ -65,6 +65,10 @@ namespace Phoneword
                         input = result.BestTranscription.ToString();
 
                         new UIAlertView("DONE", "You said \"{" + input + "}\".", null, "OK", null).Show();
+
+                        /*var donecontroller = UIAlertController.Create("DONE","You said \"{" + input + "}\".", UIAlertControllerStyle.Alert);
+                        donecontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                        PresentViewController(donecontroller, true, null);*/
                     }
                 }
             });

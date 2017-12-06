@@ -29,6 +29,7 @@ namespace Phoneword
 
         private LoadingOverlay loader;
 
+        //Variables for using speech
         private SFSpeechAudioBufferRecognitionRequest recognitionRequest;
         private SFSpeechRecognitionTask recognitionTask;
         private AVAudioEngine audioEngine = new AVAudioEngine();
@@ -44,6 +45,7 @@ namespace Phoneword
         private float offset = 10.0f;          // Extra offset
         private bool moveViewUp = false;           //Whether the view moves up (depends on keyboard)
 
+<<<<<<< HEAD
         private VDAGateway vdaGateway;
 
         string final_query;
@@ -54,11 +56,14 @@ namespace Phoneword
         NSObject keyboardup;
         NSObject keyboarddown;
 >>>>>>> 5593ef0... Harry: Styling on KPI and Actions page
+=======
+        private VDAGateway vdaGateway; //Variables for transitioning to different view
+        string final_query; //Query passed to Microsoft LUIS
+>>>>>>> 0b0da14... Comments Added to iOS
 
 
         public MainViewController(IntPtr handle) : base(handle)
-        {
-        }
+        {} //Constructor
 
         private void KeyBoardUpNotification(NSNotification notification)
         {//Moves the screen up, when the keyboard shows
@@ -67,7 +72,7 @@ namespace Phoneword
             var val = (NSValue)notification.UserInfo.ValueForKey(UIKeyboard.FrameEndUserInfoKey);
             CGRect r = val.CGRectValue;
 
-            // Find what view opened the keyboard
+            // Find what view opened the keyboard and assign it to activeview
             foreach (UIView view in this.View.Subviews)
             {
                 if (view.IsFirstResponder)
@@ -75,7 +80,6 @@ namespace Phoneword
             }
 
             // Bottom of the controller = initial position + height + offset 
-            //
             if (activeview == null)
             {
                 bottom = offset;
@@ -131,7 +135,7 @@ namespace Phoneword
 
         private void initSpeakerButton()
         {
-            SpeakerButton.Enabled = false;
+            SpeakerButton.Enabled = false; //Click once to start recording, click twice to end recording
 
             SFSpeechRecognizer.RequestAuthorization((SFSpeechRecognizerAuthorizationStatus auth) =>
             {
@@ -179,7 +183,7 @@ namespace Phoneword
             };
         }
 
-        private void resetTexts(){
+        private void resetTexts(){ //Remove user text on delete
             Querybox.Text = "";
             YouAskedLabel.Text = "";
             final_query = "";
@@ -194,9 +198,9 @@ namespace Phoneword
             PresentViewController(welcomecontroller, true, null);
 
 
-            vdaGateway = new VDAGateway();
+            vdaGateway = new VDAGateway();  //Instance of transition between controller views
 
-            resetTexts();
+            resetTexts(); //Text should be empty when first accessing MainViewController
 
             //Create a tap gesture for movign the keyboard when touching outside of it
             var g = new UITapGestureRecognizer(() => View.EndEditing(true));
@@ -211,20 +215,15 @@ namespace Phoneword
             NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillHideNotification, KeyBoardDownNotification);
 
 
-
-
-
-
             base.ViewDidLoad();
 
-            DealershipNameLabel.Text = login_info.dealer_name;
+            DealershipNameLabel.Text = login_info.dealer_name; //Assign attributes of label
             DealershipNameLabel.LineBreakMode = UILineBreakMode.WordWrap;
             
 
             Querybox.Placeholder = "Your question...";
 
-
-            YouAskedLabel.TextAlignment = UITextAlignment.Center;
+            YouAskedLabel.TextAlignment = UITextAlignment.Center; //Assign attributes of label
             YouAskedLabel.LineBreakMode = UILineBreakMode.WordWrap;
 
             initSpeakerButton();
@@ -311,7 +310,6 @@ namespace Phoneword
                         response1controller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
                         PresentViewController(response1controller, true, null); //Display action
 
-                        //new UIAlertView("Error", "Chat bot service could not identify relevant KPI for your query", null, "OK", null).Show();
                     }
                     else
                     {
@@ -320,7 +318,6 @@ namespace Phoneword
                         response2controller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
                         PresentViewController(response2controller, true, null); //Display action
 
-                        //new UIAlertView("Server Error", "Server status for retrieving your relevant KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
                     }
                     HomeSubmitButton.Enabled = true;
 <<<<<<< HEAD
@@ -343,7 +340,6 @@ namespace Phoneword
                     relatedkpicontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
                     PresentViewController(relatedkpicontroller, true, null); //Display action
 
-                    //new UIAlertView("Server Error", $"Server returned incompatable model for relvant kpis", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
 <<<<<<< HEAD
                     loader.Hide();
@@ -367,7 +363,6 @@ namespace Phoneword
                     response2controller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
                     PresentViewController(response2controller, true, null); //Display action
 
-                    //new UIAlertView("Server Error", "Server status for retrieving your needed KPI: " + response.StatusCode.ToString(), null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
 <<<<<<< HEAD
                     loader.Hide();
@@ -389,7 +384,6 @@ namespace Phoneword
                     relatedkpicontroller.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
                     PresentViewController(relatedkpicontroller, true, null); //Display action
 
-                    //new UIAlertView("Server Error", $"Server returned incompatable model for needed kpis", null, "OK", null).Show();
                     HomeSubmitButton.Enabled = true;
 <<<<<<< HEAD
                     loader.Hide();
@@ -415,7 +409,6 @@ namespace Phoneword
         }
 
         // ============== Speech Recognition Functions ============
-        //  probably want to store in class or something in the future
         public void StartRecording()
         {
             Querybox.Placeholder = "Recording";
@@ -444,7 +437,6 @@ namespace Phoneword
                     }
                 }
             });
-
 
         }
 
